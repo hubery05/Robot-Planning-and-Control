@@ -18,6 +18,26 @@ QQ交流群：861253468
 
 
 
+## Reachability-based Decision Making for City Driving
+
+针对具有高级驾驶辅助和自动化特征的车辆，设计了一种离散决策算法。我们将系统建模为一个混合自动机，其中自动机中离散模式之间的转换对应于驱动模式决策，并开发了一种基于前后可达集的模式转换时间确定方法。该算法既可以作为一个独立的组件，也可以作为一种方法来指导底层的运动规划器获得安全的参考轨迹。在一定的假设条件下，该算法保证了城市交通的安全性和生动性，并通过计算机仿真验证了算法的有效性。
+
+
+
+
+
+
+
+
+
+
+
+![image-20200204121050465](/home/lichunhong/.config/Typora/typora-user-images/image-20200204121050465.png)
+
+视频参考：https://www.youtube.com/watch?v=uLOsCZ4s03U
+
+
+
 ## Trajectory Optimization and Situational Analysis Framework for Autonomous Overtaking with Visibility Maximization
 
 ### IV. BEHAVIORAL PLANNER
@@ -166,19 +186,27 @@ TODO：
 
 # 基于采样的运动规划
 
+## A*及其变种
+
+
+
+
+
+
+
 
 
 ## Lattice
 
-## Trajectory Planning for BERTHA -a Local, Continuous Method
+### Trajectory Planning for BERTHA -a Local, Continuous Method
 
 摘要：本文在总结前人研究成果的基础上，提出了在完全自主完成柏莎-奔驰纪念路线103公里的车辆上进行轨迹规划的策略。我们提出一个由变分公式导出的局部连续方法。解的轨迹是一个目标函数的约束极值，该目标函数用于表达动态可行性和舒适性。静态和动态障碍物约束以多边形的形式合并。这些约束经过精心设计，以确保解收敛到单个全局最优解。
 
-### II. RELATED WORK
+#### II. RELATED WORK
 
-#### A. Preliminaries
+**A. Preliminaries**
 
-#### B. Objective function
+**B. Objective function**
 
 代价函数组成：
 
@@ -186,7 +214,7 @@ TODO：
 
 
 
-#### C. Constraint functions
+**C. Constraint functions**
 
 约束项：内部约束、外部约束
 
@@ -200,7 +228,7 @@ TODO：
 
 
 
-#### D. Building constraint polygons from sensor data
+**D. Building constraint polygons from sensor data**
 
 
 
@@ -218,7 +246,7 @@ TODO：
 
 
 
-#### E. Distance function
+**E. Distance function**
 
 //TODO
 
@@ -226,11 +254,11 @@ TODO：
 
 ![image-20200117205411907](/home/lichunhong/.config/Typora/typora-user-images/image-20200117205411907.png)
 
-#### F. Re-planning scheme
+**F. Re-planning scheme**
 
 ![image-20200117204615577](/home/lichunhong/.config/Typora/typora-user-images/image-20200117204615577.png)
 
-#### G. Constrained optimization
+**G. Constrained optimization**
 
 //TODO
 
