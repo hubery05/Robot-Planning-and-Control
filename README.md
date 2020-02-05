@@ -18,7 +18,7 @@ QQ交流群：861253468
 
 
 
-## Reachability-based Decision Making for City Driving
+## 2018-Reachability-based Decision Making for City Driving
 
 针对具有高级驾驶辅助和自动化特征的车辆，设计了一种离散决策算法。我们将系统建模为一个混合自动机，其中自动机中离散模式之间的转换对应于驱动模式决策，并开发了一种基于前后可达集的模式转换时间确定方法。该算法既可以作为一个独立的组件，也可以作为一种方法来指导底层的运动规划器获得安全的参考轨迹。在一定的假设条件下，该算法保证了城市交通的安全性和生动性，并通过计算机仿真验证了算法的有效性。
 
@@ -38,7 +38,7 @@ QQ交流群：861253468
 
 
 
-## Trajectory Optimization and Situational Analysis Framework for Autonomous Overtaking with Visibility Maximization
+## 2019-Trajectory Optimization and Situational Analysis Framework for Autonomous Overtaking with Visibility Maximization
 
 ### IV. BEHAVIORAL PLANNER
 
@@ -162,7 +162,9 @@ TODO：
 
 
 
+## 2014-A Behavioral Planning Framework for Autonomous Driving.pdf
 
+![image-20200205155523496](/home/lichunhong/.config/Typora/typora-user-images/image-20200205155523496.png)
 
 
 
@@ -180,6 +182,10 @@ TODO：
 
 
 
+
+
+
+
 # 基于人工势场的运动规划
 
 
@@ -187,6 +193,38 @@ TODO：
 # 基于采样的运动规划
 
 ## A*及其变种
+
+参考简介：https://www.jianshu.com/p/a3951ce7574d
+
+https://www.cnblogs.com/Leonhard-/p/6866070.html
+
+https://www.cnblogs.com/yangrouchuan/p/6373285.html
+
+https://blog.csdn.net/lqzdreamer/article/details/85108310
+
+
+
+A* :
+
+Weighted A*:
+
+ARA\*: anytime repairing A\*
+
+LPA*：Lifelong Planning A\*
+
+D\*:D\*是动态A\*（[D-Star](https://baike.baidu.com/item/D-Star), Dynamic A*）
+
+D* Lite:
+
+Focussed D*:
+
+Field D*:
+
+Theta\*:算法可以优化A\*​的路径，但是如果A*算法部分做的不够好的话，theta\*效果会大打折扣。
+
+LazyTheta*:
+
+
 
 
 
@@ -198,7 +236,18 @@ TODO：
 
 ## Lattice
 
-### Trajectory Planning for BERTHA -a Local, Continuous Method
+
+
+### 2015-Real-time motion planning methods for autonomous on-road driving: State-of-the-art and future research directions
+综述文章
+
+
+
+
+
+
+
+### 2014-Trajectory Planning for BERTHA -a Local, Continuous Method
 
 摘要：本文在总结前人研究成果的基础上，提出了在完全自主完成柏莎-奔驰纪念路线103公里的车辆上进行轨迹规划的策略。我们提出一个由变分公式导出的局部连续方法。解的轨迹是一个目标函数的约束极值，该目标函数用于表达动态可行性和舒适性。静态和动态障碍物约束以多边形的形式合并。这些约束经过精心设计，以确保解收敛到单个全局最优解。
 
@@ -261,6 +310,117 @@ TODO：
 **G. Constrained optimization**
 
 //TODO
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+### 2011-Motion Planning for Autonomous Driving with a Conformal Spatiotemporal Lattice
+摘要-我们提出了一种适用于公路自主驾驶的运动规划器，它采用了为行星漫游者导航而开创的状态格框架，以适应公共道路的结构化环境。本文的主要贡献在于提出了一种搜索空间表示方法，使得搜索算法能够系统有效地实时地探索时空维度。这使得低级planner，在有其他车辆在场的情况下，能够致力于规划跟随领先车辆、改变车道和绕过障碍物。我们证明了我们的算法可以很容易地在**GPU上加速**，并在自主乘用车上进行了演示。
+
+
+
+#### I. INTRODUCTION
+
+我们的计划者还使用了一种**新的时空搜索图**，它结合了沿选定空间维度的精确约束满足和沿时间维度的状态的分辨率等价剪枝，其结果是，在不过度增加状态空间大小的情况下，可以检查时间和速度的大量变化。
+
+构建一个能够在复杂环境中智能操作的规划师的典型工作依赖于将规划解决方案分解为一个规划师层次结构，这些规划师依次对搜索空间进行更具体的表示，并在时间上进行更精细的离散化。层次结构中的每个计划者必须具有其他计划者的模型。这些模型必然有缺陷，否则分解将是多余的。规划者之间对行为的期望不匹配会导致计划动作的不稳定，特别是当上级规划者向下级规划者发出的命令不可行时。我们提出的规划框架通过在较低的层次上承担更多的责任来缓解这个问题，这些责任可以在尝试执行行动之前决定行动是否可行。
+
+例如，通过在**统一优化框架内进行规划**，我们的规划者能够在没有特定行为指示的情况下，决定是保持在慢行交通后面的距离，还是改变车道以通过慢行交通。
+
+
+
+#### II. RELATED WORK
+
+
+
+#### III. METHOD
+
+
+
+**A. Paths and Trajectories**
+
+**B. Spatiotemporal Lattice**
+
+每个顶点的状态向量表示为 $$(x,y,a,θ,κ,[ti, ti+1),[vj, vj+1))$$。在Frenet坐标系中，可简化表示为五维向量$$(s,l,a,[ti, ti+1),[vj, vj+1))$$。
+
+
+
+**C. Why include acceleration in the state space?**
+
+![image-20200205105802799](/home/lichunhong/.config/Typora/typora-user-images/image-20200205105802799.png)
+
+从相同顶点出发的轨迹末端状态可能落在相同的时间速度晶格上，使用加速度维度区分轨迹。最终的轨迹拥有更一致的加速度剖面。
+
+**D. Cost function**
+
+分成两部分：
+
+由于多个轨迹使用相同的基本路径，因此在使用该路径的各种轨迹之前，仅依赖于$$（x，y，θ，k）$$的代价函数项被计算。然后根据每条轨迹计算$$a，t，v$$的项。
+
+
+
+**E. Picking the best final state**
+
+
+
+**F. World Representation**
+
+
+
+#### IV. GPU ACCELERATION
+
+
+
+#### V. EXPERIMENTAL RESULTS
+
+分别在CPU和GPU上测试了完整的规划所需时间，如下表所示。
+
+![image-20200205114538777](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114538777.png)
+
+该planner展示了良好的轨迹规划特性，例如过弯道时，能够规划出合理的速度和加速度。在换道、超车、并线等一系列决策中也表现良好。
+
+
+
+![image-20200205113946025](/home/lichunhong/.config/Typora/typora-user-images/image-20200205113946025.png)
+
+
+
+![image-20200205114009520](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114009520.png)
+
+![image-20200205114054116](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114054116.png)
+
+
+
+
+
+
+
+
+
+### 2009-Differentially Constrained Mobile Robot Motion Planning in State Lattices
+
+
+
+
+
+
+
+lattice起源文章？
+
+
+
+
 
 
 
