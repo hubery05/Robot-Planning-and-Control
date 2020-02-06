@@ -356,6 +356,14 @@ LazyTheta*:
 
 
 
+搜索算法：
+
+![image-20200206110050966](/home/lichunhong/.config/Typora/typora-user-images/image-20200206110050966.png)
+
+
+
+
+
 **C. Why include acceleration in the state space?**
 
 ![image-20200205105802799](/home/lichunhong/.config/Typora/typora-user-images/image-20200205105802799.png)
@@ -364,7 +372,7 @@ LazyTheta*:
 
 **D. Cost function**
 
-分成两部分：
+代价函数分成两部分：
 
 由于多个轨迹使用相同的基本路径，因此在使用该路径的各种轨迹之前，仅依赖于$$（x，y，θ，k）$$的代价函数项被计算。然后根据每条轨迹计算$$a，t，v$$的项。
 
@@ -372,13 +380,29 @@ LazyTheta*:
 
 **E. Picking the best final state**
 
+代价函数：最小化轨迹成本的加权总和上+进一步行驶的奖励+花费额外时间的惩罚。
+
+![image-20200206103655760](/home/lichunhong/.config/Typora/typora-user-images/image-20200206103655760.png)
+
+然后，从$$n_f$$到起始状态反向追溯，重构最优轨迹。
+
 
 
 **F. World Representation**
 
+静态障碍物的表示：通过离散化的$$(x,y)$$空间，将静态障碍物放到查找表中。
+
+动态障碍物的表示：离散化三维$$(x,y,t)$$空间，将移动障碍物放入表格中。
+
+障碍物用矩形框表示，在每次采样时执行一次查表操作。
+
 
 
 #### IV. GPU ACCELERATION
+
+GPU可以用来加速算法。当最坏的搜索情况发生时，不可避免要遍历整个图。所以我们必须搜索整个图。
+
+
 
 
 
