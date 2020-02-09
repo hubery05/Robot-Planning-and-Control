@@ -4,7 +4,87 @@ QQ交流群：861253468
 
 
 
+# 强化学习基础
+
+
+
+
+
+
+
+## 2019-Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model
+相关视频：
+
+- https://www.youtube.com/watch?v=hYV4-m7_SK8
+
+- https://www.youtube.com/watch?v=We20YSAJZSE
+
+
+
+构建具有规划能力的智能体一直是追求人工智能的主要挑战之一。基于树的规划方法在具有挑战性的领域取得了巨大的成功，例如象棋和围棋，在这些领域有一个完美的模拟器。然而，在现实问题中，控制环境的动力往往是复杂和未知的。在这项工作中，我们提出了MuZero算法，该算法通过将基于树的搜索与学习模型相结合，在一系列具有挑战性和视觉复杂性的领域中实现超人的性能，而不需要了解它们的底层动力学。MuZero学习了一个模型，当迭代应用时，它预测与计划最直接相关的数量：奖励、行动选择策略和价值函数。当在57个不同的Atari游戏上进行评估时，我们的新算法达到了一个新的水平，这是一个测试人工智能技术的标准视频游戏环境，在这个环境中，基于模型的规划方法一直在挣扎。在进行评估时，国际象棋和shogi在不了解游戏规则的情况下，MuZero与游戏规则提供的AlphaZero算法的超人性能相匹配。
+
+
+
+
+
+
+
+
+
+
+
+### 2017-NIPS-Imagination-Augmented Agents for Deep Reinforcement Learning
+
+相关视频：
+
+- https://www.youtube.com/watch?v=xp-YOPcjkFw
+
+- https://www.youtube.com/watch?v=agXIYMCICcc
+
+
+
+#### 1 Introduction
+
+在使用深度神经网络和**无模型强化学**习（RL）为许多领域开发有能力的代理方面取得了进展，其中原始观测直接映射到值或动作。然而，这种方法通常需要大量的训练数据，并且所得到的策略不容易推广到相同环境中的新任务，因为它缺乏一般智力的行为灵活性构成。
+
+**基于模型的RL**旨在通过赋予代理一个由过去经验合成的世界模型来解决这些缺点。通过使用内部模型对未来进行推理（这里也称为想象），代理人可以寻求积极的结果，同时避免现实环境中反复试验的不利后果，包括做出不可逆转、糟糕的决定。即使该模型需要首先学习，它也可以更好地跨状态进行泛化，在同一环境中跨任务保持有效，并利用额外的无监督学习信号，从而最终提高数据效率。基于模型的方法的另一个吸引人之处是它们能够通过增加内部模拟的数量的更多计算来扩展性能。
+
+**最近的成功主要来自无模型方法**。在这样的领域中，基于模型的代理采用标准规划方法的性能通常遭受由函数逼近引起的模型误差。这些错误在规划过程中会加剧，导致过于乐观或性能差。
+
+**我们试图通过提出想象增强来解决这个缺点**，它通过“学习解释”其不完美的预测来使用近似的环境模型。我们的算法可以直接在低层的观测数据上训练，而不需要太多的领域知识，类似于最近的无模型成功。在不对环境模型的结构及其可能存在的缺陷作出任何假设的情况下，我们的方法以端到端的方式学习，从模型模拟中提取有用的知识，特别是不完全依赖模拟收益。这使得代理可以从基于模型的想象中获益，而不必像传统的基于模型的规划那样陷入陷阱。我们证明，在包括Sokoban在内的各个领域中，我们的方法比无模型基线执行得更好。即使在模型不完善的情况下，它也能以较少的数据获得更好的性能，这是实现基于模型的RL的重要一步。
+
+
+
+#### 2 The I2A architecture
+
+![image-20200208111215557](/home/lichunhong/.config/Typora/typora-user-images/image-20200208111215557.png)
+
+
+
+
+
 # 基于学习的决策
+
+
+
+## 强化学习
+
+### 2019-Predictive Trajectory Planning in Situations with Hidden Road Users Using Partially Observable Markov Decision Processes
+
+摘要-近年来，仅基于传感器测量的最先进的紧急制动辅助系统大大减少了交通事故和人员伤亡。为了能够对因传感器限制或遮挡而避开车辆视野的道路使用者做出反应，提出了一种在自主车辆决策过程中预测遮挡区域潜在隐藏交通参与者的方法。采用**部分可观测的马尔可夫决策过程**来**确定车辆的纵向运动**。使用车辆的视野进行观察。因此，根据当前或预测的环境，使用传感器设置的通用模型计算视野。这样，车辆既可以观察到它检测到先前隐藏的道路使用者，也可以接收到道路畅通的信息。总的来说，这使得车辆能够更好地预测未来的发展。因此，需要对可能位于隐蔽区域的车辆进行假设。我们将在两个场景中演示该方法。首先在一个场景中，车辆必须以最少的动作谨慎地驶入交叉口，其次在城市交通的典型场景中。评价结果表明，该方法能够正确预测隐藏的道路使用者，并采取相应的措施。
+
+- 这篇文章获得了**IV19 Best Paper Award**，可见POMDP在自动驾驶领域的潜力。
+- 本文能够正确预测隐藏的道路使用者，相当于进行了风险评估，对车辆加减速进行控制。
+
+
+
+提出了一种概率规划方法，能够在预期的规划过程中安全地处理上述情况。我们使用部分可观察马尔可夫决策过程（POMDP）来解决潜在道路使用者的挑战。在规划过程中，自主车辆能够根据当前和预测的环境考虑未来的观测。为了确定车辆将看到什么，我们使用车辆传感器设置的通用表示来计算其视野。总的来说，视野和对隐藏车辆的假设的结合导致了一个更具前瞻性和前瞻性的规划过程。
+
+![image-20200207154739565](/home/lichunhong/.config/Typora/typora-user-images/image-20200207154739565.png)
+
+
+
+
 
 ## Learning Driver Behavior Models from Traffic Observations for Decision Making and Planning
 
@@ -179,6 +259,38 @@ TODO：
 团队：Autonomous Systems Lab, Stanford University 　　Ford Greenfield Labs
 
 摘要：对人类在环境中的运动进行推理是实现安全的、具有社会意识的机器人导航的重要前提。因此，多智能体行为预测已经成为自动驾驶汽车等现代人机交互系统的核心组成部分。虽然存在多种用于轨迹预测的方法，但它们中的许多仅用一种语义类的智能体进行评估，并且仅使用先前的轨迹信息，忽略了从通用传感器到自治系统的在线可用的大量信息。为此，我们提出了Trajectron++，这是一个模块化的、图结构的递归模型，它可以在包含异构数据（如语义图和相机图像）的同时，预测具有不同语义类的一般智能体的轨迹。我们的模型与机器人规划和控制框架紧密结合，能够生成对主体运动规划产生重要影响的预测。我们在几个具有挑战性的现实世界轨迹预测数据集上演示了我们的模型的性能，其性能超过了一系列最先进的确定性和生成性方法。
+
+
+
+# 基于学习的运动规划
+
+## 深度学习
+
+
+
+
+
+## 强化学习
+
+### 2020-Survey of Deep Reinforcement Learning for Motion Planning of Autonomous Vehicles
+
+**摘要：**近年来，自主汽车领域的学术研究在传感器技术、V2X通信、安全、安保、决策、控制，甚至法律和标准化规则等方面都得到了广泛的应用。除了经典的控制设计方法外，人工智能和机器学习方法几乎在所有这些领域都有应用。研究的另一部分集中在运动规划的不同层次，如战略决策、轨迹规划和控制。机器学习本身已经发展出一系列的技术，本文描述了其中一个领域，深度强化学习（DRL）。本文对分层运动规划问题进行了深入的研究，并介绍了DRL的基本原理。设计这样一个系统的主要要素是环境的建模、建模抽象、状态和感知模型的描述、适当的奖励和底层神经网络的实现。本文介绍了车辆模型、仿真可能性和计算要求。给出了不同层次和观测模型的战略决策，如连续和离散状态表示、基于网格和基于摄像机的解决方案。本文综述了由自动驾驶的不同任务和层次（如跟车、车道保持、轨迹跟踪、合并或在密集交通中驾驶）系统化的最新解决方案。最后，讨论了开放性问题和未来的挑战。
+
+**标签：**综述性文章  深度强化学习
+
+
+
+#### I. INTRODUCTION
+
+**A. The Hierarchical Classification of Motion Planning for Autonomous Driving**
+
+自动驾驶车辆运动规划的层次结构：路线规划、行为规划、运动规划、反馈控制
+
+![image-20200207130739007](/home/lichunhong/.config/Typora/typora-user-images/image-20200207130739007.png)
+
+**B. Reinforcement Learning**
+
+
 
 
 
@@ -454,13 +566,131 @@ lattice起源文章？
 
 
 
-## Baidu Apollo EM Motion Planner
+## 2018-Baidu Apollo EM Motion Planner
 
 摘要-本文介绍了一个基于百度阿波罗（开源）自主驾驶平台的实时运动规划系统。开发的系统旨在解决工业4级运动规划问题，同时考虑安全性、舒适性和可扩展性。该系统以分层的方式覆盖多车道和单车道的自主驾驶：（1）系统顶层是一种多车道策略，通过比较并行计算的车道水平轨迹来处理车道变换情况。（2） 在车道级轨迹生成器中，基于Frenet框架迭代求解路径和速度优化问题。（3） 针对路径和速度优化问题，提出了动态规划和基于样条函数的二次规划相结合的方法，构造了一个可扩展且易于调整的框架，同时处理交通规则、障碍物决策和平滑度。该规划方法可扩展到高速公路和低速城市驾驶场景。我们还通过场景说明和道路测试结果演示了该算法。
 
-
+### I. INTRODUCTION
 
 **A. Multilane Strategy**
+
+
+
+**B. Path-Speed Iterative Algorithm**
+
+
+
+**C. Decisions and Traffic Regulations**
+
+针对4级自主驾驶，决策模块应包括可扩展性和可行性。可伸缩性是场景表达能力（即可以解释的自主驾驶案例）。当考虑几十个障碍物时，决策行为很难用有限的自我汽车状态集来精确描述。对于可行性，我们的意思是，生成的决策应包括一个可行区域，在该可行区域内，ego车可以在动态限制内进行机动。然而，手动调整和基于模型的决策都不能生成无碰撞轨迹来验证其可行性。
+
+在EM-planner的决策步骤中，我们以不同的方式描述行为。首先，用一个粗糙可行的轨迹来描述汽车的自我运动意图。然后，用此轨迹测量障碍物之间的相互作用。即使场景变得更加复杂，这种基于轨迹的可行决策也是可伸缩的。其次，规划器还将根据轨迹生成一个凸可行空间来平滑样条曲线参数。基于二次规划的平滑样条曲线解算器可以用来生成更平滑的路径和速度剖面。这保证了一个可行和顺利的解决方案。
+
+
+
+
+
+### II. EM PLANNER FRAMEWORK WITH MULTILANE STRATEGY
+
+
+
+![image-20200207185419069](/home/lichunhong/.config/Typora/typora-user-images/image-20200207185419069.png)
+
+
+
+### III. EM PLANNER AT LANE LEVEL
+
+![image-20200207185638460](/home/lichunhong/.config/Typora/typora-user-images/image-20200207185638460.png)
+
+在第一个E-step，会将动静态障碍物投影到Frenet坐标系下，并且只考虑低速车辆和到来的障碍物，对于高速物体，EM Planner基于安全原因更倾向于变道。在第二个E-step，会考虑高速、低速车辆以及到来的障碍物。
+
+两个M-step，首先使用DP在非凸的空间中生成粗糙的解，接下来使用QP进行凸优化求出平滑的解。
+
+
+
+**A. SL and ST Mapping (E-step)**
+
+
+
+SL映射
+
+![image-20200207190809039](/home/lichunhong/.config/Typora/typora-user-images/image-20200207190809039.png)
+
+
+
+ST映射
+
+![image-20200207190834522](/home/lichunhong/.config/Typora/typora-user-images/image-20200207190834522.png)
+
+
+
+**B. M-Step DP Path**
+
+![image-20200207191432352](/home/lichunhong/.config/Typora/typora-user-images/image-20200207191432352.png)
+
+![image-20200207191515221](/home/lichunhong/.config/Typora/typora-user-images/image-20200207191515221.png)
+
+
+
+晶格采样是基于Frenet框架的。如图7所示，首先在ego车辆之前对多行点进行采样。不同行之间的点用五次多项式边光滑连接。点行之间的间隔距离取决于速度、道路结构、车道变换等。该框架允许根据应用程序场景自定义采样策略。例如，换道可能需要比当前车道行驶更长的采样间隔。此外，出于安全考虑，采样距离将至少覆盖8秒或200米。
+
+在lattice轨迹构造之后，通过代价函数的求和来评价图的每一条边。我们使用SL投影、交通规则和车辆动力学的信息来构建函数。总边缘成本函数是平滑度、避障和车道成本函数的线性组合。
+
+这里Cost有三个组成部分：平滑Cost、离障碍物距离Cost、离偏导线偏差Cost
+
+![image-20200207193047535](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193047535.png)
+
+其中，
+
+![image-20200207193109627](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193109627.png)
+
+![image-20200207193202141](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193202141.png)
+
+![image-20200207193221870](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193221870.png)
+
+
+
+Nudge Decision包括nudge，yield和overtake，用来生成convex hull来进行QP的spline优化。
+
+
+
+**C. M-Step Spline QP Path**
+
+
+
+
+
+![image-20200207193710133](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193710133.png)
+
+
+
+
+
+![image-20200207193818227](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193818227.png)
+
+QP的Cost相对简单些，就是负责平滑的路径一阶二阶三阶倒数还有DP结果与引导线的偏差。
+
+**D. M-Step DP Speed Optimizer**
+
+![image-20200207194405850](/home/lichunhong/.config/Typora/typora-user-images/image-20200207194405850.png)
+
+![image-20200207194859303](/home/lichunhong/.config/Typora/typora-user-images/image-20200207194859303.png)
+
+**E. M-Step QP Speed Optimizer**
+
+![image-20200207195049570](/home/lichunhong/.config/Typora/typora-user-images/image-20200207195049570.png)
+
+![image-20200207195107274](/home/lichunhong/.config/Typora/typora-user-images/image-20200207195107274.png)
+
+**G. Notes on Non-convex Optimization With DP and QP**
+
+
+
+### IV. CASE STUDY
+
+
+
+
 
 
 
