@@ -1,4 +1,7 @@
+
+
 # Robot-Planning-and-Control
+
 每周更新自动驾驶领域论文或相关算法实现，路径规划为主。
 QQ交流群：861253468
 
@@ -364,7 +367,74 @@ LazyTheta*:
 
 
 
+### 2015-State Lattice-based Motion Planning for Autonomous On-Road Driving
+
+
+在DUC比赛中，BOSS作为代表性的自动驾驶车辆。它的运动规划采用了lattice-based planner，在结构化的道路上进行规划。
+
+这之后，基于BOSS，有很多改进的算法相继诞生。
+
+- spatiotemporal state lattice
+
+基于Boss，[23]和[38]说明了使用时空状态格的运动规划策略。这次，我们对几列姿势进行了采样，而不是只对[14]中描述的一列进行采样。曲率也作为姿态元素添加。来自不同列的满足特定连接模式的两个姿势将被连接以呈现路径边。路径边的计算仍然采用曲率多项式，虽然它是由以前的二次多项式更新为三次多项式的，这种自适应是为了保证姿态处的曲率连续性，而姿态可以作为积分轨迹的切换点。然后在螺旋路径边上应用一定数量的速度剖面来绘制轨迹边。除了[14]中先前应用的恒定和线性速度剖面外，还考虑了由比例导数（PD）定律控制的车辆跟随特性的加速度剖面。
+
+
+
+
+
+- 在[25]中提出了一种变种的lattice planner，它通过较少密集地采样，但后优化得到的轨迹来实现降低计算复杂度。
+
+  ![image-20200210145001763](/home/lichunhong/.config/Typora/typora-user-images/image-20200210145001763.png)
+
+
+
+[23]中用于从ego载体到状态格的轨迹段的曲率三次螺旋被曲率四次螺旋所代替。这就减少了两个连续平面交叉处曲率变化率方面的突出跳跃，从而提高了平面的一致性。与文献[23]中描述的动态构造的分辨率等效状态格不同，[25]中使用的图通过引入预定的离散速度空间来体现对时间空间的考虑。因此，通过在路径边上应用三次速度多项式生成轨迹边。
+
+速度多项式的系数可以在给定固定速度和边缘两个端点处零加速度的假设下确定。这样就保证了轨迹切换点的加速度连续性，使得轨迹与文献[23]相比具有更好的平滑性。然而，速度单元的数量实际上是有限的，这意味着不同的轨迹轮廓更少。最后，通过约束的横向偏移，曲率，航向，速度和加速度所施加的固定的图形顶点形成最后的优化轨迹。据测试，在换道、静态障碍物和动态障碍物三种实验场景下，合成轨迹的性能提高了10%，计算时间缩短了50%以上。
+
+- [26]和[27]指出，上述时空采样和搜索方法通过构造和评估最终将被丢弃的rajectors而浪费了大量计算时间。他们建议，集中注意力时间采样、搜索应进行的地区，这些区域最佳轨迹存在的可能性很高。
+
+在[27][26]中，提出了一种两步规划方法。第一步的目标是获得一个参考轨迹，包括一个非参数播种路径和一个可沿该路径应用的可调节速度剖面。在具体实现中，首先对感兴趣的空间进行搜索和定位，不考虑时间空间。这意味着一种启发式方法，静态成本单独决定聚焦的空间区域。因此，有时这种运动规划方法可能无法得到满意的解，例如，当时间相关成本而不是静态成本确定聚焦空间采样空间时。在第二步中，聚焦采样在由调节的速度剖面指定的时空区域内进行，并稍微偏移种子路径。现阶段的弹道结构与文献[25]相似。这种运动规划方法被认为是实用和有效的。
+
+- 继承了[24]所示的采样方法，[39]和[17]提出了一种基于终端流形的运动规划器。
+
+  终端流形可以看作是由通过[24]的采样方法得到的采样顶点组成的。它被称为终端流形，因为所有的轨迹从ego车辆开始，并在采样顶点结束。由于没有构造图，因此不需要昂贵的基于图的搜索，因此避免了昂贵的计算麻烦的问题[24]。在轨迹表示方面，高速驾驶采用文献[24]中提出的方法，而低速驾驶的横向运动则取决于纵向运动。这种待遇被认为是合理的。一方面，由于引入潜在侧滑，车辆相对于道路中心线的纵向和横向运动在高速时高度解耦，这有利于轨道纵向和横向方面的解耦设计。另一方面，在低速时无侧滑是一个有效的假设，因此非完整约束起着关键作用，如果采用解耦设计，由于无效的曲率，将使大多数轨迹失效。仿真结果表明，合成的运动规划器能够很好地处理城市交通和公路交通中的几种具有挑战性的交通场景。
+
+<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200210105736372.png" alt="image-20200210105736372" style="zoom:80%;" />
+
+
+
+
+
+
+
+
+
+> 注：
+>
+> [23] Matthew McNaughton. Parallel algorithms for real-time motion planning. 2011.
+>
+> [25] Wenda Xu, Junqing Wei, John M Dolan, Huijing Zhao, and Hongbin Zha. A
+> real-time motion planner with trajectory optimization for autonomous vehicles. In
+> Robotics and Automation (ICRA), 2012 IEEE International Conference on, pages
+> 2061{2067. IEEE, 2012.
+>
+> [38] Matthew McNaughton, Chris Urmson, John M Dolan, and Jin-Woo Lee. Motion planning for autonomous driving with a conformal spatiotemporal lattice. In
+> Robotics and Automation (ICRA), 2011 IEEE International Conference on, pages
+> 4889{4895. IEEE, 2011.
+
+
+
+
+
+
+
+
+
+
+
 ### 2015-Real-time motion planning methods for autonomous on-road driving: State-of-the-art and future research directions
+
 综述文章
 
 
@@ -442,6 +512,64 @@ LazyTheta*:
 
 
 
+
+### 2013-IV-Focused Trajectory Planning for Autonomous On-Road Driving
+
+论文解析：https://blog.csdn.net/gophae/article/details/104069222
+
+本文所论述的方法仅适用于静态障碍物避障，且不考虑碰撞检测成功性，属于简单不可行的方法，但具有一定参考意义。
+
+
+
+
+
+摘要—自动驾驶汽车的道路运动规划通常是一个具有挑战性的问题。 过去的努力已经针对城市和高速公路环境分别提出了解决方案。 我们确定了现有解决方案的主要优点/缺点，并提出了一种新颖的两步运动计划系统，该系统可在一个框架内解决城市和高速公路驾驶问题。 参考轨迹规划（I）利用密集的晶格采样和优化技术来生成易于调整且类似于人的参考轨迹，以解决道路几何形状，障碍物和高级指令的问题。 通过围绕参考轨迹进行集中采样，跟踪轨迹计划（II）生成，评估和选择进一步满足运动动力学约束以执行的参数轨迹。 所描述的方法保留了详尽的时空规划器的大多数性能优势，同时显着减少了计算量。
+
+本方法的结构是这样的：
+
+![image-20200210172728273](/home/lichunhong/.config/Typora/typora-user-images/image-20200210172728273.png)
+
+核心结构上由两个planner组成，第一个是为了减少计算量所设计的‘’粗糙‘’planner, 计算出一点直线段构成的0阶连续曲线，然后拟合成三阶多项式（曲率连续）。第二个planner 再上一个planner的基础上对曲线进行进一步优化，使曲率更加平滑，同时保证横向偏差尽量小。
+
+第一个planner:
+
+![image-20200210172702258](/home/lichunhong/.config/Typora/typora-user-images/image-20200210172702258.png)
+
+接下来就是进行第二次优化，下图表示了第二次优化和第一次的粗糙曲线的关系：
+
+![image-20200210175010090](/home/lichunhong/.config/Typora/typora-user-images/image-20200210175010090.png)
+
+具体解析参考：https://blog.csdn.net/gophae/article/details/104069222
+
+
+
+
+
+### 2012-IJRR-Optimal trajectories for time-critical street scenarios using discretized terminal manifolds
+
+研究了移动交通中自主车辆所面临的轨迹生成问题。在给定交通流的预测运动的情况下，提出的半反应式规划策略实现了所有需要的长期机动任务（换道、合并、保持距离、保持速度、精确停车等），同时提供了短期的避碰。在街道相对坐标系中，采用精心选择的成本函数和终端状态集（流形）对横向和纵向运动进行组合优化，是获得舒适、人性化和物理上可行的轨迹的关键。仿真交通场景验证了该方法的性能。
+
+<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200210155133289.png" alt="image-20200210155133289" style="zoom:80%;" />
+
+
+
+
+
+
+
+### 2012-ICRA-A Real-Time Motion Planner with Trajectory Optimization for Autonomous Vehicles
+
+摘要-本文提出了一种基于轨迹优化的实时自主驾驶运动规划器。规划人员首先对规划空间进行离散化，并基于一组成本函数搜索最优轨迹。然后对合成轨迹的轨迹和速度进行迭代优化。优化后的计算复杂度低，能够在几次迭代中收敛到更高质量的解。与未经优化的规划器相比，该框架可以减少52%的规划时间，提高轨迹质量。提出的运动规划器在三种不同的场景下分别在仿真和实车上进行了实现和测试。实验表明，该规划器能输出高质量的轨迹，并具有智能驾驶行为。
+
+
+
+
+
+![image-20200210154914498](/home/lichunhong/.config/Typora/typora-user-images/image-20200210154914498.png)
+
+
+
+![image-20200210154932245](/home/lichunhong/.config/Typora/typora-user-images/image-20200210154932245.png)
 
 
 
