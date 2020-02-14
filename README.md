@@ -18,6 +18,8 @@ QQ交流群：861253468
 ## 2019-Mastering Atari, Go, Chess and Shogi by Planning with a Learned Model
 相关视频：
 
+- https://www.youtube.com/watch?v=vt5jOSy7cz8
+
 - https://www.youtube.com/watch?v=hYV4-m7_SK8
 
 - https://www.youtube.com/watch?v=We20YSAJZSE
@@ -547,9 +549,47 @@ LazyTheta*:
 
 ### 2012-IJRR-Optimal trajectories for time-critical street scenarios using discretized terminal manifolds
 
+视频：https://www.youtube.com/watch?v=se2aRN_UBZM
+
+论文解析：https://zhuanlan.zhihu.com/p/51097792
+
+用最优化方法没有考虑各种限制因素，规划处的路径可能更为偏激。
+
+
+
+
+
 研究了移动交通中自主车辆所面临的轨迹生成问题。在给定交通流的预测运动的情况下，提出的半反应式规划策略实现了所有需要的长期机动任务（换道、合并、保持距离、保持速度、精确停车等），同时提供了短期的避碰。在街道相对坐标系中，采用精心选择的成本函数和终端状态集（流形）对横向和纵向运动进行组合优化，是获得舒适、人性化和物理上可行的轨迹的关键。仿真交通场景验证了该方法的性能。
 
 <img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200210155133289.png" alt="image-20200210155133289" style="zoom:80%;" />
+
+
+
+### 1. Introduction
+
+
+
+![image-20200212130235441](/home/lichunhong/.config/Typora/typora-user-images/image-20200212130235441.png)
+
+上述方法如果进行长久的重新规划，那么如果我们引入启发式或次优性，就会产生关键的影响。连续规划之间的差异很容易导致车辆运动的超调，振荡甚至不稳定，这在高速行驶时尤为重要。 此外，如图2所示，计划周期显着影响紧急轨迹。
+
+![image-20200212125552587](/home/lichunhong/.config/Typora/typora-user-images/image-20200212125552587.png)
+
+
+
+但是，正如我们所提到的，**时间一致性（TC）**不能在实践中始终实现。 一方面，关于未来障碍物轨迹的先前假设可能被证明是错误的，因此必须根据新的传感器数据进行航向校正。 另一方面，计算时间以及优化范围是有限的，因此在每个步骤中都将包含新信息。对于本文中提出的策略，只有在没有实际阻碍TC的情况下，才能确保TC。
+
+根据Bellman的“最优性原则”，**最优策略意味着TC**（Bellman 1954）。 这个事实，而不是特定的目标函数，是即将推出的最佳控制方法的原因。
+
+而我们的方法是TC的。
+
+
+
+### 2. Problem formulation in the Frenet coordinates
+
+### 3. Optimal control formulation
+
+### 4. Application to the original problem
 
 
 
@@ -705,6 +745,29 @@ lattice起源文章？
 
 
 # 基于优化的运动规划
+
+
+
+## 2019-A Decoupled Trajectory Planning Framework Based on the Integration of Lattice Searching and Convex Optimization
+
+这篇文章总结和对比了前人在轨迹规划（维度包含$$x,y,theta,v$$）所采用的方法，作者采取了一种解耦方法，进行了上述维度的规划，相较于之前提出的规划方法做出了改进。
+
+
+
+摘要：本文提出了一种基于格搜索和凸优化集成的解耦轨迹规划框架，用于结构化环境中的自动驾驶。对于带有时间戳信息的3D轨迹规划问题，由于存在多种约束，其可行域是非凸的，因此很容易陷入局部最优的轨迹规划。
+并且该问题的解空间非常大，以至于很难在多项式时间内确定最优解。为了解决该非凸问题，并提高优化过程的收敛速度，考虑到离散化驾驶环境并减少求解空间的能力，采用了基于点阵搜索的方法。由晶格搜索产生的最终路径通常位于全局最优值的附近。但是，该解决方案既不是时空平滑的，也不是全局最优的，因此通常称为粗糙解。因此，引入了随后的非线性优化过程以细化粗略轨迹（由路径和速度组合）。本文提出的框架是通过在各种挑战性场景中进行仿真来实现和评估的。仿真结果验证了轨迹规划器可以生成高质量的轨迹，并且执行时间也是可以接受的。
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -1138,6 +1201,399 @@ Behavior states transition conditions.
 １、动态障碍物的碰撞检测只检查空间上的碰撞，没检查时间上的碰撞？
 
 ２、采样的轨迹没有速度信息，速度是如何给定的？
+
+
+
+# Apollo
+
+
+
+## Apollo 5.0中lattice_planner流程
+
+**动机：**
+
+当前所使用的lattice planner虽然可以生成时空无碰撞的轨迹，但其在速度上的规划单调的，只是简单的离散化速度进行采样，每条轨迹上速度简单变化。没有考虑当附近有障碍物就减速情景，只会根据cost选择最优的轨迹。百度的lattice planner在纵向采样时有做相关考虑，其采样点并不是固定的，跟动态障碍物有交互。
+
+
+
+
+
+Lattice planner与EM planner区别：
+
+Lattice Planner主要基于采样+选择，而EM Planner的思路是逐层优化迭代。从规划层面来说，两者均可用于各种场景。从决策层来看，Lattice的决策相对简单，适用于相对简单的场景，如低速园区，高速公路。EM算法对交规的决策做的相对更完善，可以处理相对复杂的普通城市道路。
+
+
+
+- Lattice Planner：可以保证时空（时间空间）上的不碰撞，但是速度的规划没有考虑障碍物？风险性减速？
+
+  速度的规划只是简单的离散化速度进行采样，每条轨迹上速度简单变化
+
+
+
+- EM planner：除了保证在时空上不碰撞之外，还考虑了更多的交规、限制，其速度规划更为合理
+
+
+
+
+
+**lattice planner 规划详解**：https://blog.csdn.net/qq_27513221/article/details/86075614
+
+
+
+### lattice planner工作流程
+
+- 采样备选轨迹
+- 计算cost
+- 选择代价最小轨迹进行碰撞检测，如果无法通过碰撞检测，则选择剩余轨迹中代价最小的，进行约束和碰撞检测，直到通过检测。
+- 输出运动轨迹
+
+![image-20200212223008953](/home/lichunhong/.config/Typora/typora-user-images/image-20200212223008953.png)
+
+### 采样
+
+lattice planner需要分别进行横向采样和纵向采样。假设横向采样条数n，纵向采样条数m，之后将横纵向采样两两结合生成n*m条轨迹。（是否可以优化计算的轨迹条数？例如当已知某个横向位移点附近已有障碍物，则该横向采样可以去掉。）
+
+```c++
+//file in modules/planning/lattice/trajectory_generation/trajectory1d_generator.cc
+void Trajectory1dGenerator::GenerateTrajectoryBundles(
+     const PlanningTarget& planning_target,
+     Trajectory1DBundle* ptr_lon_trajectory_bundle,
+     Trajectory1DBundle* ptr_lat_trajectory_bundle) {
+  //纵向采样
+  GenerateLongitudinalTrajectoryBundle(planning_target,
+                                        ptr_lon_trajectory_bundle);
+  //横向采样
+  GenerateLateralTrajectoryBundle(ptr_lat_trajectory_bundle);
+}
+```
+
+
+
+#### 横向采样
+
+下图不是Apollo原图，只是方便理解。 横向采样点固定，但纵向采样点不固定。
+
+![image-20200212121013125](/home/lichunhong/.config/Typora/typora-user-images/image-20200212121013125.png)
+
+- 如果开启了横向轨迹优化，则进行LateralOSQPOptimizer进行轨迹优化，仅采样出一条横向轨迹。//TODO:LateralOSQPOptimizer
+- 否则的话，计算末状态，进行横向采样。现在Apollo的代码中设计了三个末状态横向偏移量d，-0.5，0.0和0.5，以及四个到达这些横向偏移量的纵向位移s，分别为10，20，40，80，其中d是关于s的函数。
+
+```c++
+void Trajectory1dGenerator::GenerateLateralTrajectoryBundle(
+    Trajectory1DBundle* ptr_lat_trajectory_bundle) const {
+  if (!FLAGS_lateral_optimization) {
+    auto end_conditions = end_condition_sampler_.SampleLatEndConditions();
+
+    // Use the common function to generate trajectory bundles.
+    GenerateTrajectory1DBundle<5>(init_lat_state_, end_conditions,
+                                  ptr_lat_trajectory_bundle);
+  } else {
+    double s_min = init_lon_state_[0];
+    double s_max = s_min + FLAGS_max_s_lateral_optimization;
+
+    double delta_s = FLAGS_default_delta_s_lateral_optimization;
+
+    auto lateral_bounds =
+        ptr_path_time_graph_->GetLateralBounds(s_min, s_max, delta_s);
+
+    // LateralTrajectoryOptimizer lateral_optimizer;
+    std::unique_ptr<LateralQPOptimizer> lateral_optimizer(
+        new LateralOSQPOptimizer);
+
+    lateral_optimizer->optimize(init_lat_state_, delta_s, lateral_bounds);
+    auto lateral_trajectory = lateral_optimizer->GetOptimalTrajectory();
+    ptr_lat_trajectory_bundle->push_back(
+        std::make_shared<PiecewiseJerkTrajectory1d>(lateral_trajectory));
+  }
+}
+```
+
+
+
+#### 纵向采样
+
+纵向采样考虑了定速巡航、动态障碍物跟随、动态障碍物超越、停车策略。
+
+```c++
+void Trajectory1dGenerator::GenerateLongitudinalTrajectoryBundle(
+    const PlanningTarget& planning_target,
+    Trajectory1DBundle* ptr_lon_trajectory_bundle) const {
+  //定速巡航 cruising trajectories are planned regardlessly.
+  GenerateSpeedProfilesForCruising(planning_target.cruise_speed(),
+                                   ptr_lon_trajectory_bundle);
+ //动态障碍物
+  GenerateSpeedProfilesForPathTimeObstacles(ptr_lon_trajectory_bundle);
+
+  if (planning_target.has_stop_point()) {
+//停车
+在(planning_target.stop_point().s(),
+                                     ptr_lon_trajectory_bundle);
+  }
+}
+```
+
+
+
+在进行纵向采样时，考虑了不同的采样策略。
+
+- 在定速巡航策略下，end_condition是可行的速度和加速度(0)，生成4次曲线。
+
+对于巡航状态，我们通过两层循环来完成采样。外层循环将速度从零到上限值按等间隔均匀遍历。内层循环遍历到达末状态速度的时间，我们从 1 秒到 8 秒按 1 秒的间隔均匀遍历。由于巡航状态不需要指明到达末状态的 S 值，所以这里只需要用四次多项式拟合即可。
+
+- 对于动态障碍物，end_condition需要结合ST图，生成跟车和超车的末端采样点。最终生成5次曲线。如果有多个障碍物，我们就对这些障碍物分别采样超车和跟车所对应的末状态。那么总结下来就是遍历所有和车道有关联的障碍物，对他们分别采样超车和跟车的末状态，然后用多项式拟合即可获得一系列纵向轨迹。
+
+  ```c++
+  std::vector<SamplePoint>
+  EndConditionSampler::QueryPathTimeObstacleSamplePoints() const {
+    const auto& vehicle_config =
+        common::VehicleConfigHelper::Instance()->GetConfig();
+    std::vector<SamplePoint> sample_points;
+    for (const auto& path_time_obstacle :
+         ptr_path_time_graph_->GetPathTimeObstacles()) {
+      std::string obstacle_id = path_time_obstacle.id();
+        //采样点：跟车
+      QueryFollowPathTimePoints(vehicle_config, obstacle_id, &sample_points);
+       //采样点：超车
+      QueryOvertakePathTimePoints(vehicle_config, obstacle_id, &sample_points);
+    }
+    return sample_points;
+  }
+  ```
+
+- 如果规划目标有停止点，则采样生成停止在s的轨迹，end_condition是在不同的时间到达停止点s。
+
+在停车状态中，给定停车点，末状态的速度和加速度都是零，所以末状态是确定的。那么我们只需用一层循环来采样到达停车点的时间即可。
+
+#### 轨迹合成
+
+轨迹的合成
+
+```c++
+//file in /modules/planning/lattice/trajectory_generation/trajectory_combiner.cc
+class TrajectoryCombiner {
+ public:
+  static DiscretizedTrajectory Combine(
+      const std::vector<common::PathPoint>& reference_line,
+      const Curve1d& lon_trajectory, const Curve1d& lat_trajectory,
+      const double init_relative_time);
+};
+```
+
+
+
+
+
+
+
+### 问题
+
+#### 对于动态障碍物，末端条件是如何根据ST图计算的？
+
+以跟随动态障碍物为例：跟随，在ST中表示为不超过动态障碍物Box的下边界。首先计算出该动态障碍物下边界在ST图中表示，并离散化为$$(s,t)$$数组，结合动态障碍物沿参考线的纵向速度，可确定采样点sample_points，这些采样点中包含了$$(s,v,t)$$信息。  
+
+```c++
+void EndConditionSampler::QueryFollowPathTimePoints(
+    const common::VehicleConfig& vehicle_config, const std::string& obstacle_id,
+    std::vector<SamplePoint>* const sample_points) const {
+  //跟随，在ST中表示为不超过动态障碍物Box的下边界
+  std::vector<STPoint> follow_path_time_points =
+      ptr_path_time_graph_->GetObstacleSurroundingPoints(
+          obstacle_id, -FLAGS_numerical_epsilon, FLAGS_time_min_density);
+
+  for (const auto& path_time_point : follow_path_time_points) {
+    //动态障碍物投影到参考线的速度
+    double v = ptr_prediction_querier_->ProjectVelocityAlongReferenceLine(
+        obstacle_id, path_time_point.s(), path_time_point.t());
+    // Generate candidate s
+    // 最远的距离s_upper就是障碍物下边界-半个车身
+    double s_upper = path_time_point.s() -         			vehicle_config.vehicle_param().front_edge_to_center();
+    // 最近的距离s_lower=s_upper-固定值
+    double s_lower = s_upper - FLAGS_default_lon_buffer;
+    CHECK_GE(FLAGS_num_sample_follow_per_timestamp, 2);
+    double s_gap =
+        FLAGS_default_lon_buffer /
+        static_cast<double>(FLAGS_num_sample_follow_per_timestamp - 1);
+    for (size_t i = 0; i < FLAGS_num_sample_follow_per_timestamp; ++i) {
+      double s = s_lower + s_gap * static_cast<double>(i);
+      SamplePoint sample_point;
+      sample_point.path_time_point = path_time_point;
+      sample_point.path_time_point.set_s(s);
+      sample_point.ref_v = v;
+      sample_points->push_back(std::move(sample_point));
+    }
+  }
+}
+```
+
+采样点确定后，那么末端条件end_condition就可以得到。
+
+```c++
+std::vector<Condition>
+EndConditionSampler::SampleLonEndConditionsForPathTimePoints() const {
+  std::vector<Condition> end_s_conditions;
+
+  std::vector<SamplePoint> sample_points = QueryPathTimeObstacleSamplePoints();
+  for (const SamplePoint& sample_point : sample_points) {
+    if (sample_point.path_time_point.t() < FLAGS_polynomial_minimal_param) {
+      continue;
+    }
+    double s = sample_point.path_time_point.s();
+    double v = sample_point.ref_v;
+    double t = sample_point.path_time_point.t();
+    if (s > feasible_region_.SUpper(t) || s < feasible_region_.SLower(t)) {
+      continue;
+    }
+    //末端状态（x,dx,ddx）
+    State end_state = {s, v, 0.0};
+    //end_s_conditions表示为时间t的函数
+    end_s_conditions.emplace_back(end_state, t);
+  }
+  return end_s_conditions;
+}
+
+```
+
+
+
+#### OSQR是如何采样的？
+
+
+
+
+
+
+
+
+
+
+
+### 轨迹选择
+
+
+
+
+
+#### 代价函数组成：
+
+
+1. **Objective achievement cost**
+   首先是到达目的的 cost。这里分成两种情况，一个是存在停车指令（比如红灯）的情况，另一个是没有停车指令的。如果存在停车指令，相对大的车速，其对应的轨迹 cost 就越大；如果没有停车指令，那么低速轨迹的 cost 就会越大。
+
+![image-20200212225333753](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225333753.png)
+
+
+
+2. **Lateral offset cost**
+
+![image-20200212225518532](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225518532.png)
+
+第二个 cost 是横向偏移 cost。设计这个 cost 是为了让自动驾驶汽车能尽量沿着道路中心行驶。那么像左图汽车靠道路一边行驶，和中图画龙的行驶轨迹，他们的 cost 都相对较高。
+
+
+
+3. **Collision cost**
+
+![image-20200212225555183](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225555183.png)
+
+
+
+第三个 cost 是碰撞 cost。左图中的两条轨迹，反映在右图 S-T 图中，我们可以发现红色的轨迹和蓝色障碍车在 S-T 图中的阴影区域有重叠，说明有碰撞风险，那么它的碰撞 cost 就会相对较高。而绿色的轨迹在 S-T 图中反映出来的碰撞风险较小，那么它的碰撞 cost 就相对较低。
+
+4. **Longitudinal jerk cost**
+
+第四个 cost 是纵向加加速度的 cost。加加速度（jerk）是加速度对时间的导数，表示加速度的变化率。我们用加加速度的最大值值来表示这个 cost。
+
+
+
+5. **Lateral acceleration cost**
+
+第五个 cost 是横向加速度的 cost。设计这个 cost 是为了平稳地换道。像左图猛打方向盘的轨迹，它的横向加速度 cost 就会相对较大。
+
+6. **Centripetal acceleration cost**
+
+最后一个 cost 是向心加速度 cost。设计这个 cost 是为了在转弯或调头的时候能够减速慢行。在弯道处，车速慢的轨迹，其向心加速度 cost 就会相对较低，就会更容易被率先挑选出来。
+
+![image-20200212225837173](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225837173.png)
+
+
+
+
+
+
+有了轨迹的cost以后，接下来就是一个循环检测的过程。在这个过程中，我们每次回先挑选出cost最低的轨迹，对其进行**物理限制检测**和**碰撞检测**。如果挑出来的轨迹不能同时通过这两个检测，就将其筛除，考察下一条cost最低的轨迹。
+
+#### 约束检测
+
+这里介绍一下限制检测和碰撞检测。限制检测考察的内容有轨迹的加速度、加加速度和曲率。
+
+
+
+#### 碰撞检测
+
+碰撞检测则是把自动驾驶汽车的轨迹和其他障碍物的预测轨迹进行比对，观察是否有轨迹重叠。
+
+
+
+
+
+### 问题
+
+#### 碰撞检测为什么只考虑了纵向碰撞，没有考虑横向？
+
+Apollo认为一个车道仅能够容纳一辆车，当有障碍物进入该车道时，车辆只能采取跟车（本车道）和超车（换车道）策略。
+
+
+
+#### 当车辆选择超车时，横向采样只有[-0.5,0.5]=1m的宽度，如何保证顺利超车（换道）？
+
+对于换道场景，Lattice算法仅仅需要对目标车道对应的参考线做一次采样+选择的流程。本车道和目标车道均能产生一条最优轨迹。给换道轨迹的cost上增加额外的车道优先级的cost，再将两条轨迹比较，选择cost较小的那条即可。
+
+![image-20200213112219653](/home/lichunhong/.config/Typora/typora-user-images/image-20200213112219653.png)
+
+
+
+
+
+
+
+#### ST图并没有考虑横向位移，对于多车道路面，在相同的时间，自车可能会与其他车辆在相同的S上（并排），是不是意味这相撞？但这实际上并没有相撞。超车时如何保证安全性？
+
+lattice planner ST图只考虑了当前车道障碍物。并且选择超车时，已经确保能够超车道没有风险。
+
+
+
+**优化：**
+
+每个车道均有一个ST图，代表本车道障碍物的占用情况。假设一条道路有3个车道，并且分配有优先级0,1,2，优先走优先级高的车道，这在车道优先级cost中指定。
+
+分别绘制3条车道的ST曲线。末端点采样策略如下：
+
+- 在当前车道中进行纵向采样，与Apollo采样跟车末端点策略一致。
+- 在左侧车道（如果有的话）中进行纵向采样，为了不碰撞需要同时满足当前车道和左侧车道的ST图。
+
+- 在右侧车道（如果有的话）中进行纵向采样，如上。
+
+上述方法会在横向位移产生漏洞，不适合作为判定依据。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
