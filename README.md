@@ -643,7 +643,7 @@ LazyTheta*:
 
 **B. Spatiotemporal Lattice**
 
-每个顶点的状态向量表示为 $$(x,y,a,θ,κ,[ti, ti+1),[vj, vj+1))$$。在Frenet坐标系中，可简化表示为五维向量$$(s,l,a,[ti, ti+1),[vj, vj+1))$$。
+每个顶点的状态向量表示为 $(x,y,a,θ,κ,[ti, ti+1),[vj, vj+1))$。在Frenet坐标系中，可简化表示为五维向量$(s,l,a,[ti, ti+1),[vj, vj+1))$。
 
 
 
@@ -665,7 +665,7 @@ LazyTheta*:
 
 代价函数分成两部分：
 
-由于多个轨迹使用相同的基本路径，因此在使用该路径的各种轨迹之前，仅依赖于$$（x，y，θ，k）$$的代价函数项被计算。然后根据每条轨迹计算$$a，t，v$$的项。
+由于多个轨迹使用相同的基本路径，因此在使用该路径的各种轨迹之前，仅依赖于$（x，y，θ，k）$的代价函数项被计算。然后根据每条轨迹计算$a，t，v$的项。
 
 
 
@@ -675,15 +675,15 @@ LazyTheta*:
 
 ![image-20200206103655760](/home/lichunhong/.config/Typora/typora-user-images/image-20200206103655760.png)
 
-然后，从$$n_f$$到起始状态反向追溯，重构最优轨迹。
+然后，从$n_f$到起始状态反向追溯，重构最优轨迹。
 
 
 
 **F. World Representation**
 
-静态障碍物的表示：通过离散化的$$(x,y)$$空间，将静态障碍物放到查找表中。
+静态障碍物的表示：通过离散化的$(x,y)$空间，将静态障碍物放到查找表中。
 
-动态障碍物的表示：离散化三维$$(x,y,t)$$空间，将移动障碍物放入表格中。
+动态障碍物的表示：离散化三维$(x,y,t)$空间，将移动障碍物放入表格中。
 
 障碍物用矩形框表示，在每次采样时执行一次查表操作。
 
@@ -747,7 +747,7 @@ lattice起源文章？
 
 ## 2019-A Decoupled Trajectory Planning Framework Based on the Integration of Lattice Searching and Convex Optimization
 
-这篇文章总结和对比了前人在轨迹规划（维度包含$$x,y,theta,v$$）所采用的方法，作者采取了一种解耦方法，进行了上述维度的规划。本文思路与EM_planner DP/QP优化过程基本一致，并在曲率的连续性上做出了一些改进。文章细节交代比较清楚，方便工程实现。
+这篇文章总结和对比了前人在轨迹规划（维度包含$x,y,theta,v$）所采用的方法，作者采取了一种解耦方法，进行了上述维度的规划。本文思路与EM_planner DP/QP优化过程基本一致，并在曲率的连续性上做出了一些改进。文章细节交代比较清楚，方便工程实现。
 
 摘要：本文提出了一种基于格搜索和凸优化集成的解耦轨迹规划框架，用于结构化环境中的自动驾驶。对于带有时间戳信息的3D轨迹规划问题，由于存在多种约束，其可行域是非凸的，因此很容易陷入局部最优的轨迹规划,并且该问题的解空间非常大，以至于很难在多项式时间内确定最优解。为了解决该非凸问题，并提高优化过程的收敛速度，考虑到离散化驾驶环境并减少求解空间的能力，采用了基于点阵搜索的方法。由晶格搜索产生的最终路径通常位于全局最优值的附近。但是，该解决方案既不是时空平滑的，也不是全局最优的，因此通常称为粗糙解。因此，引入了随后的非线性优化过程以细化粗略轨迹（由路径和速度组合）。本文提出的框架是通过在各种挑战性场景中进行仿真来实现和评估的。仿真结果验证了轨迹规划器可以生成高质量的轨迹，并且执行时间也是可以接受的。
 
@@ -757,9 +757,11 @@ lattice起源文章？
 
 ### III. METHODOLOGY
 
+
+
 **A. PATH SEARCHING**
 
-在$$s-p$$坐标系中采样。
+在$s-\rho $坐标系中采样。
 
 ![image-20200219192744042](/home/lichunhong/.config/Typora/typora-user-images/image-20200219192744042.png)
 
@@ -767,15 +769,72 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 ![image-20200219193006277](/home/lichunhong/.config/Typora/typora-user-images/image-20200219193006277.png)
 
-传统的碰撞检测方法是计算所有路径与每个障碍物的距离，计算量复杂度是$$O(NM)$$。这里碰撞风险的计算使用了一种高斯卷积方法，显著降低了计算量[26]。
+传统的碰撞检测方法是计算所有路径与每个障碍物的距离，计算量复杂度是$O(NM)$。这里碰撞风险的计算使用了一种高斯卷积方法，显著降低了计算量[26]。
 
 ![image-20200219193241859](/home/lichunhong/.config/Typora/typora-user-images/image-20200219193241859.png)
 
+想法：碰撞检测的实现可以在$s-l$坐标系下，使用查表方式实现。假设所有的障碍物均表示在$s-\rho$坐标系下，根据障碍物的s范围，查询每条轨迹对应的s段轨迹点集wps，并计算每个wp是否在障碍物内。碰撞风险可以用上述的卷积代替距离计算。
+
+<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200220132213195.png" alt="image-20200220132213195" style="zoom: 80%;" />
+
+每段轨迹的cost计算完之后，接下来是采用一种遍历手段，找出cost最小的路径。本文采用Dijkstra方法进行遍历。与Dijkstra算法不同的是，没有事先指定目标点，而是设计了目标点队列，存放多个目标点。当列表中的端点全部展开时，选择代价最小的作为我们的短期目标位置。**目标点队列？**
 
 
-**目标点队列？**
 
-为选择最优路径，本文采用Dijkstra方法进行遍历。与Dijkstra算法不同的是，没有事先指定目标点，而是设计了目标点队列，存放多个目标点。当列表中的端点全部展开时，选择代价最小的作为我们的短期目标位置。
+**B. PATH OPTIMIZATION**
+
+优化代价函数：
+
+![image-20200220143450694](/home/lichunhong/.config/Typora/typora-user-images/image-20200220143450694.png)
+
+约束：
+
+- 内在约束：最大曲率
+- 外在约束：不超过道路边界、无碰撞、道路速度限制
+
+![image-20200220144118144](/home/lichunhong/.config/Typora/typora-user-images/image-20200220144118144.png)
+
+注意：所有的计算均是在$s-\rho$坐标系中进行，包括碰撞检测，这需要将障碍物表示在$s-\rho$坐标系中。轨迹优化时碰撞检测包含了所有障碍物（动静障碍），计算每个轨迹点的时刻与障碍物对应时刻在位置上是否相交。
+
+轨迹优化使用的是开源非线性优化工具CasADi。
+
+
+
+**C. SPEED PROFILE SEARCHING**
+
+
+
+<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200220144926164.png" alt="image-20200220144926164" style="zoom:80%;" />
+
+
+
+代价函数：包含与参考速度的差异、加速度大小、加加速度大小、与障碍物碰撞风险
+
+![image-20200220145104759](/home/lichunhong/.config/Typora/typora-user-images/image-20200220145104759.png)
+
+碰撞风险可以使用TTC（Time-To-Collision）、DTC（Distance-To-Collision ）、TTR（Time-ToReact）等表示。本文选择了DTC方案。这里的碰撞检测只根据ST图计算了纵向？
+
+![image-20200220145902566](/home/lichunhong/.config/Typora/typora-user-images/image-20200220145902566.png)
+
+同路径的遍历基本一致，也使用了Dijkstra算法进行速度曲线寻优。
+
+![image-20200220150032959](/home/lichunhong/.config/Typora/typora-user-images/image-20200220150032959.png)
+
+注意：速度轨迹搜索仅考虑动态障碍物（在S-T图中的障碍物均为动态障碍物），因为在上一步路径的选择、优化过程中，已经规避了动静态障碍物，但是动态障碍物的碰撞时间会随着车辆速度的变化产生变化，而静态障碍物不会。所以仅需考虑动态障碍物即可。
+
+
+
+**D. SPEED PROFILE OPTIMIZATION**
+
+优化：
+
+![image-20200220152006294](/home/lichunhong/.config/Typora/typora-user-images/image-20200220152006294.png)
+
+
+
+碰撞约束：只考虑纵向s方向的碰撞？
+
+![image-20200220154447846](/home/lichunhong/.config/Typora/typora-user-images/image-20200220154447846.png)
 
 
 
@@ -789,7 +848,10 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 
 
+想法：当检测存在噪声时，应急情况的处理：
 
+- 当速度检测出现问题：后面有一辆车，速度极大，导致planner无法规划路径，车辆是否应该急停？
+- 当障碍物检测出现问题或者突发的静态障碍物出现：道路突发情况，无法规划路径，急停？
 
 
 
@@ -1413,7 +1475,7 @@ class TrajectoryCombiner {
 
 #### 对于动态障碍物，末端条件是如何根据ST图计算的？
 
-以跟随动态障碍物为例：跟随，在ST中表示为不超过动态障碍物Box的下边界。首先计算出该动态障碍物下边界在ST图中表示，并离散化为$$(s,t)$$数组，结合动态障碍物沿参考线的纵向速度，可确定采样点sample_points，这些采样点中包含了$$(s,v,t)$$信息。  
+以跟随动态障碍物为例：跟随，在ST中表示为不超过动态障碍物Box的下边界。首先计算出该动态障碍物下边界在ST图中表示，并离散化为$(s,t)$数组，结合动态障碍物沿参考线的纵向速度，可确定采样点sample_points，这些采样点中包含了$(s,v,t)$信息。  
 
 ```c++
 void EndConditionSampler::QueryFollowPathTimePoints(
@@ -1603,21 +1665,741 @@ lattice planner ST图只考虑了当前车道障碍物。并且选择超车时�
 
 
 
+## QP solvers
+
+- Dense solvers:
+  - [CVXOPT](http://cvxopt.org/)
+  - [qpOASES](https://projects.coin-or.org/qpOASES)
+  - [quadprog](https://pypi.python.org/pypi/quadprog/)
+- Sparse solvers:
+  - [ECOS](https://web.stanford.edu/~boyd/papers/ecos.html) as wrapped by [CVXPY](http://www.cvxpy.org/)
+  - [Gurobi](https://www.gurobi.com/)
+  - [MOSEK](https://mosek.com/)
+  - [OSQP](https://github.com/oxfordcontrol/osqp)
+
+Apollo在MPC控制以及Lattice横向轨迹优化上使用了OSQP解算器。在EM_Planner中路径和速度的二次优化均使用了OSQP和IPOPT解算器。一些优化任务中，也有用到qpOASES。
+
+
+
+参考：https://github.com/stephane-caron/qpsolvers
 
 
 
 
 
 
+## 二次规划（QP）样条路径优化
+
+参考：https://github.com/ApolloAuto/apollo/blob/master/docs/specs/qp_spline_path_optimizer_cn.md
+
+_**Tip**: 为了更好的展示本文档中的等式，我们建议使用者使用带有[插件](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)的Chrome浏览器，或者将Latex等式拷贝到[在线编辑公式网站](http://www.hostmath.com/)进行浏览。_
+
+二次规划（QP）+样条插值
+
+### 1.  目标函数
+
+#### 1.1  获得路径长度
+
+路径定义在station-lateral坐标系中。**s**的变化区间为从车辆当前位置点到默认路径的长度。
+
+#### 1.2   获得样条段
+
+将路径划分为**n**段，每段路径用一个多项式来表示。
+
+#### 1.3  定义样条段函数
+
+每个样条段 ***i*** 都有沿着参考线的累加距离$d_i$。每段的路径默认用5阶多项式表示。
+
+
+$$
+l = f_i(s)
+  = a_{i0} + a_{i1} \cdot s + a_{i2} \cdot s^2 + a_{i3} \cdot s^3 + a_{i4} \cdot s^4 + a_{i5} \cdot s^5        (0 \leq s \leq d_{i})
+$$
+
+
+### 1.4  定义每个样条段优化目标函数
+
+
+$$
+cost = \sum_{i=1}^{n} \Big( w_1 \cdot \int\limits_{0}^{d_i} (f_i')^2(s) ds + w_2 \cdot \int\limits_{0}^{d_i} (f_i'')^2(s) ds + w_3 \cdot \int\limits_{0}^{d_i} (f_i^{\prime\prime\prime})^2(s) ds \Big)
+$$
+
+
+### 1.5  将开销（cost）函数转换为QP公式
+
+QP公式:
+
+$$
+\begin{aligned}
+minimize  & \frac{1}{2}  \cdot x^T \cdot H \cdot x  + f^T \cdot x \\
+s.t. \qquad & LB \leq x \leq UB \\
+      & A_{eq}x = b_{eq} \\
+      & Ax \geq b
+\end{aligned}
+$$
+
+下面是将开销（cost）函数转换为QP公式的例子：
+
+$$
+f_i(s) ＝
+\begin{vmatrix} 1 & s & s^2 & s^3 & s^4 & s^5 \end{vmatrix}
+\cdot
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}   
+$$
+
+
+且
+
+$$
+f_i'(s) =
+\begin{vmatrix} 0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4 \end{vmatrix}
+\cdot
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}   
+$$
+
+
+
+且
+
+$$
+f_i'(s)^2 =
+\begin{vmatrix} a_{i0} & a_{i1} & a_{i2} & a_{i3} & a_{i4} & a_{i5}  \end{vmatrix} 
+\cdot 
+\begin{vmatrix} 0 \\ 1 \\ 2s \\ 3s^2 \\ 4s^3 \\ 5s^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix} 0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}  \end{vmatrix}
+$$
+
+然后得到，
+
+$$
+\int\limits_{0}^{d_i} f_i'(s)^2 ds ＝
+\int\limits_{0}^{d_i}
+\begin{vmatrix} a_{i0} & a_{i1} & a_{i2} & a_{i3} & a_{i4} & a_{i5} \end{vmatrix} 
+\cdot  
+\begin{vmatrix} 0 \\ 1 \\ 2s \\ 3s^2 \\ 4s^3 \\ 5s^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix} 0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}  \end{vmatrix} ds
+$$
+
+
+
+从聚合函数中提取出常量得到，
+
+$$
+\int\limits_{0}^{d_i} f'(s)^2 ds ＝
+\begin{vmatrix} a_{i0} & a_{i1} & a_{i2} & a_{i3} & a_{i4} & a_{i5} \end{vmatrix} 
+\cdot 
+\int\limits_{0}^{d_i}  
+\begin{vmatrix} 0 \\ 1 \\ 2s \\ 3s^2 \\ 4s^3 \\ 5s^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix} 0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4 \end{vmatrix} ds 
+\cdot 
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}  \end{vmatrix}
+$$
+$$
+＝\begin{vmatrix} a_{i0} & a_{i1} & a_{i2} & a_{i3} & a_{i4} & a_{i5} \end{vmatrix} 
+\cdot \int\limits_{0}^{d_i}
+\begin{vmatrix} 
+0  & 0 &0&0&0&0\\ 
+0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4\\
+0 & 2s & 4s^2 & 6s^3 & 8s^4 & 10s^5\\
+0 & 3s^2 &  6s^3 & 9s^4 & 12s^5&15s^6 \\
+0 & 4s^3 & 8s^4 &12s^5 &16s^6&20s^7 \\
+0 & 5s^4 & 10s^5 & 15s^6 & 20s^7 & 25s^8 
+\end{vmatrix} ds 
+\cdot 
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}
+$$
+
+
+最后得到，
+
+
+$$
+\int\limits_{0}^{d_i} 
+f'_i(s)^2 ds =\begin{vmatrix} a_{i0} & a_{i1} & a_{i2} & a_{i3} & a_{i4} & a_{i5} \end{vmatrix} 
+\cdot \begin{vmatrix} 
+0 & 0 & 0 & 0 &0&0\\ 
+0 & d_i & d_i^2 & d_i^3 & d_i^4&d_i^5\\
+0& d_i^2 & \frac{4}{3}d_i^3& \frac{6}{4}d_i^4 & \frac{8}{5}d_i^5&\frac{10}{6}d_i^6\\
+0& d_i^3 & \frac{6}{4}d_i^4 & \frac{9}{5}d_i^5 & \frac{12}{6}d_i^6&\frac{15}{7}d_i^7\\
+0& d_i^4 & \frac{8}{5}d_i^5 & \frac{12}{6}d_i^6 & \frac{16}{7}d_i^7&\frac{20}{8}d_i^8\\
+0& d_i^5 & \frac{10}{6}d_i^6 & \frac{15}{7}d_i^7 & \frac{20}{8}d_i^8&\frac{25}{9}d_i^9
+\end{vmatrix} 
+\cdot 
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}
+$$
+
+请注意我们最后得到一个6介的矩阵来表示5阶样条插值的衍生开销。
+应用同样的推理方法可以得到2阶，3阶样条插值的衍生开销。
+
+### 2  约束条件  
+
+#### 2.1  初始点约束
+
+假设第一个点为 ($s_0$, $l_0$), ($s_0$, $l'_0$) and ($s_0$, $l''_0$)，其中$l_0$ , $l'_0$ and $l''_0$表示横向的偏移，并且规划路径的起始点的第一，第二个点的衍生开销可以从$f_i(s)$, $f'_i(s)$, $f_i(s)''$计算得到。
+
+将上述约束转换为QP约束等式，使用等式：
+
+
+$$
+A_{eq}x = b_{eq}
+$$
+
+
+下面是转换的具体步骤：
+
+
+$$
+f_i(s_0) = 
+\begin{vmatrix} 1 & s_0 & s_0^2 & s_0^3 & s_0^4&s_0^5 \end{vmatrix} 
+\cdot 
+\begin{vmatrix}  a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}\end{vmatrix} = l_0
+$$
+
+且
+
+$$
+f'_i(s_0) = 
+\begin{vmatrix} 0& 1 & 2s_0 & 3s_0^2 & 4s_0^3 &5 s_0^4 \end{vmatrix} 
+\cdot 
+\begin{vmatrix}  a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix} = l'_0
+$$
+
+且 
+
+$$
+f''_i(s_0) = 
+\begin{vmatrix} 0&0& 2 & 3\times2s_0 & 4\times3s_0^2 & 5\times4s_0^3  \end{vmatrix} 
+\cdot 
+\begin{vmatrix}  a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix} = l''_0
+$$
+
+其中，i是包含$s_0$的样条段的索引值。
+
+#### 2.2  终点约束
+
+和起始点相同，终点$(s_e, l_e)$ 也应当按照起始点的计算方法生成约束条件。
+
+将起始点和终点组合在一起，得出约束等式为：
+
+
+$$
+\begin{vmatrix} 
+ 1 & s_0 & s_0^2 & s_0^3 & s_0^4&s_0^5 \\
+ 0&1 & 2s_0 & 3s_0^2 & 4s_0^3 & 5s_0^4 \\
+ 0& 0&2 & 3\times2s_0 & 4\times3s_0^2 & 5\times4s_0^3  \\
+ 1 & s_e & s_e^2 & s_e^3 & s_e^4&s_e^5 \\
+ 0&1 & 2s_e & 3s_e^2 & 4s_e^3 & 5s_e^4 \\
+ 0& 0&2 & 3\times2s_e & 4\times3s_e^2 & 5\times4s_e^3  
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix}  a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix} 
+ = \begin{vmatrix}
+ l_0\\
+ l'_0\\
+ l''_0\\
+ l_e\\
+ l'_e\\
+ l''_e\\
+ \end{vmatrix}
+$$
+
+
+#### 2.3  平滑节点约束
+
+该约束的目的是使样条的节点更加平滑。假设两个段$seg_k$ 和$seg_{k+1}$互相连接，且$seg_k$的累计值s为$s_k$。计算约束的等式为：
+
+
+$$
+f_k(s_k) = f_{k+1} (s_0)
+$$
+
+下面是计算的具体步骤：
+
+$$
+\begin{vmatrix} 
+ 1 & s_k & s_k^2 & s_k^3 & s_k^4&s_k^5 \\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k0} \\ a_{k1} \\ a_{k2} \\ a_{k3} \\ a_{k4} \\ a_{k5} 
+ \end{vmatrix} 
+ = \begin{vmatrix} 
+ 1 & s_{0} & s_{0}^2 & s_{0}^3 & s_{0}^4&s_{0}^5 \\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k+1,0} \\ a_{k+1,1} \\ a_{k+1,2} \\ a_{k+1,3} \\ a_{k+1,4} \\ a_{k+1,5} 
+ \end{vmatrix}
+$$
+
+然后
+
+$$
+\begin{vmatrix} 
+ 1 & s_k & s_k^2 & s_k^3 & s_k^4&s_k^5 &  -1 & -s_{0} & -s_{0}^2 & -s_{0}^3 & -s_{0}^4&-s_{0}^5\\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k0} \\ a_{k1} \\ a_{k2} \\ a_{k3} \\ a_{k4} \\ a_{k5} \\ a_{k+1,0} \\ a_{k+1,1} \\ a_{k+1,2} \\ a_{k+1,3} \\ a_{k+1,4} \\ a_{k+1,5}  
+ \end{vmatrix} 
+ = 0
+$$
+
+将$s_0$ = 0代入等式。
+
+同样地，可以为下述等式计算约束等式：
+
+$$
+f'_k(s_k) = f'_{k+1} (s_0)
+\\
+f''_k(s_k) = f''_{k+1} (s_0)
+\\
+f'''_k(s_k) = f'''_{k+1} (s_0)
+$$
+
+
+#### 2.4  点采样边界约束
+
+在路径上均匀的取样**m**个点，检查这些点上的障碍物边界。将这些约束转换为QP约束不等式，使用不等式：
+
+
+$$
+Ax \geq b
+$$
+
+
+首先基于道路宽度和周围的障碍物找到点 $(s_j, l_j)$的下边界$l_{lb,j}$，且$j\in[0, m]$。计算约束的不等式为：
+
+
+$$
+\begin{vmatrix} 
+ 1 & s_0 & s_0^2 & s_0^3 & s_0^4&s_0^5 \\
+  1 & s_1 & s_1^2 & s_1^3 & s_1^4&s_1^5 \\
+ ...&...&...&...&...&... \\
+ 1 & s_m & s_m^2 & s_m^3 & s_m^4&s_m^5 \\
+ \end{vmatrix} \cdot \begin{vmatrix}a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}  \end{vmatrix} 
+ \geq 
+ \begin{vmatrix}
+ l_{lb,0}\\
+ l_{lb,1}\\
+ ...\\
+ l_{lb,m}\\
+ \end{vmatrix}
+$$
+
+
+
+同样地，对上边界$l_{ub,j}$，计算约束的不等式为：
+
+$$
+\begin{vmatrix} 
+ -1 & -s_0 & -s_0^2 & -s_0^3 & -s_0^4&-s_0^5 \\
+  -1 & -s_1 & -s_1^2 & -s_1^3 & -s_1^4&-s_1^5 \\
+ ...&...-&...&...&...&... \\
+ -1 & -s_m & -s_m^2 & -s_m^3 & -s_m^4&-s_m^5 \\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5}  \end{vmatrix} 
+ \geq
+ -1 \cdot
+ \begin{vmatrix}
+ l_{ub,0}\\
+ l_{ub,1}\\
+ ...\\
+ l_{ub,m}\\
+ \end{vmatrix}
+$$
 
 
 
 
 
+## 二次规划ST速度优化
+
+参考：https://github.com/ApolloAuto/apollo/blob/master/docs/specs/qp_spline_st_speed_optimizer_cn.md
+
+_**Tip**: 为了更好的展示本文档中的等式，我们建议使用者使用带有[插件](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)的Chrome浏览器，或者将Latex等式拷贝到[在线编辑公式网站](http://www.hostmath.com/)进行浏览。_
+
+### 1  定义
+
+从二次规划样条路径中选取一条路径后，Apollo将路线上的所有障碍物和自动驾驶车辆（ADV）展现在一个时间-路径图上（path-time ST），该路径图表示了路径上的站点变化。速度优化的任务是在ST图上找到一条合理的，无障碍的路径。
+
+Apollo使用多个样条来表示速度参数，在ST图上表示为一系列的ST点。Apollo会对二次规划的结果做再次的平衡以获得最佳的速度参数。QP问题的标准类型定义为：
+
+
+$$
+minimize \frac{1}{2} \cdot x^T \cdot H \cdot x + f^T \cdot x 
+\\
+s.t. LB \leq x \leq UB
+\\
+A_{eq}x = b_{eq}
+\\
+Ax \leq b
+$$
+
+
+### 2  目标函数
+
+#### 2.1  获取样条段
+
+将路ST速度参数分为 **n** 段，每段路径用一个多项式来表示。
+
+#### 2.2  定义样条段函数
+
+每个样条段 ***i*** 都有沿着参考线的累加距离$d_i$。每段的路径默认用5介多项式表示。多项式介数可以通过配置参数进行调整。
+
+
+$$
+s = f_i(t) 
+  = a_{0i} + a_{1i} \cdot t + a_{2i} \cdot t^2 + a_{3i} \cdot t^3 + a_{4i} \cdot t^4 + a_{5i} \cdot t^5
+$$
+
+
+#### 2.3  定义样条段优化函数
+
+Apollo首先定义$cost_1$以使路径更加平滑：
+
+
+$$
+cost_1 = \sum_{i=1}^{n} \Big( w_1 \cdot \int\limits_{0}^{d_i} (f_i')^2(s) ds + w_2 \cdot \int\limits_{0}^{d_i} (f_i'')^2(s) ds + w_3 \cdot \int\limits_{0}^{d_i} (f_i^{\prime\prime\prime})^2(s) ds \Big)
+$$
+
+
+然后，Apollo定义$cost_2$表示最后的S-T路径和S-T巡航路径（有速度限制且m个点）的差值：
+
+
+$$
+cost_2 = \sum_{i=1}^{n}\sum_{j=1}^{m}\Big(f_i(t_j)- s_j\Big)^2
+$$
+
+
+同样地，Apollo定义了$cost_3$表示第一个S-T路径和随后的S-T路径（o个点）的差值：
+
+
+$$
+cost_3 = \sum_{i=1}^{n}\sum_{j=1}^{o}\Big(f_i(t_j)- s_j\Big)^2
+$$
+
+
+最后得出的目标函数为：
+
+
+$$
+cost = cost_1 + cost_2 + cost_3
+$$
+
+
+### 3  约束条件  
+
+#### 3.1 初始点约束
+
+假设第一个点是($t0$, $s0$)，且$s0$在路径$f_i(t)$, $f'i(t)$, 和$f_i(t)''$上（位置、速率、加速度）。Apollo将这些约束转换为QP约束的等式为：
+
+
+$$
+A_{eq}x = b_{eq}
+$$
+
+
+#### 3.2  单调约束
+
+路线必须是单调的，比如车辆只能往前开。
+
+在路径上采样 **m** 个点，对每一个 $j$和$j-1$ 的点对，且($j\in[1,...,m]$)，如果两个点都处在同一个样条$k$上，则：
+
+
+$$
+\begin{vmatrix}  1 & t_j & t_j^2 & t_j^3 & t_j^4&t_j^5 \\ \end{vmatrix} 
+\cdot 
+\begin{vmatrix}  a_k \\ b_k \\ c_k \\ d_k \\ e_k \\ f_k  \end{vmatrix} 
+> 
+\begin{vmatrix}  1 & t_{j-1} & t_{j-1}^2 & t_{j-1}^3 & t_{j-1}^4&t_{j-1}^5 \\ \end{vmatrix}  
+\cdot 
+\begin{vmatrix}  a_{k} \\ b_{k} \\ c_{k} \\ d_{k} \\ e_{k} \\ f_{k}  \end{vmatrix}
+$$
+
+
+如两个点分别处在不同的样条$k$和$l$上，则：
+
+
+$$
+\begin{vmatrix}  1 & t_j & t_j^2 & t_j^3 & t_j^4&t_j^5 \\ \end{vmatrix} 
+\cdot 
+\begin{vmatrix}  a_k \\ b_k \\ c_k \\ d_k \\ e_k \\ f_k  \end{vmatrix} 
+> 
+\begin{vmatrix}  1 & t_{j-1} & t_{j-1}^2 & t_{j-1}^3 & t_{j-1}^4&t_{j-1}^5 \\ \end{vmatrix}  
+\cdot 
+\begin{vmatrix}  a_{l} \\ b_{l} \\ c_{l} \\ d_{l} \\ e_{l} \\ f_{l}  \end{vmatrix}
+$$
+
+
+#### 3.3  平滑节点约束
+
+该约束的目的是使样条的节点更加平滑。假设两个段$seg_k$ 和$seg_{k+1}$互相连接，且$seg_k$的累计值 **s** 为$s_k$。计算约束的等式为：
+
+
+$$
+f_k(t_k) = f_{k+1} (t_0)
+$$
+
+
+即：
+
+$$
+\begin{vmatrix} 
+ 1 & t_k & t_k^2 & t_k^3 & t_k^4&t_k^5 \\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k0} \\ a_{k1} \\ a_{k2} \\ a_{k3} \\ a_{k4} \\ a_{k5} 
+ \end{vmatrix} 
+ = 
+\begin{vmatrix} 
+ 1 & t_{0} & t_{0}^2 & t_{0}^3 & t_{0}^4&t_{0}^5 \\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k+1,0} \\ a_{k+1,1} \\ a_{k+1,2} \\ a_{k+1,3} \\ a_{k+1,4} \\ a_{k+1,5} 
+ \end{vmatrix}
+$$
+
+
+然后，
+
+$$
+\begin{vmatrix} 
+ 1 & t_k & t_k^2 & t_k^3 & t_k^4&t_k^5 &  -1 & -t_{0} & -t_{0}^2 & -t_{0}^3 & -t_{0}^4&-t_{0}^5\\
+ \end{vmatrix} 
+ \cdot 
+ \begin{vmatrix} 
+ a_{k0} \\ a_{k1} \\ a_{k2} \\ a_{k3} \\ a_{k4} \\ a_{k5} \\ a_{k+1,0} \\ a_{k+1,1} \\ a_{k+1,2} \\ a_{k+1,3} \\ a_{k+1,4} \\ a_{k+1,5}   
+ \end{vmatrix} 
+ = 0
+$$
+
+
+等式中得出的结果为$t_0$ = 0。
+
+同样地，为下述等式计算约束等式：
+
+
+$$
+f'_k(t_k) = f'_{k+1} (t_0)
+\\
+f''_k(t_k) = f''_{k+1} (t_0)
+\\
+f'''_k(t_k) = f'''_{k+1} (t_0)
+$$
+
+
+#### 3.4  点采样边界约束
+
+在路径上均匀的取样 **m** 个点，检查这些点上的障碍物边界。将这些约束转换为QP约束不等式，使用不等式：
+
+
+$$
+Ax \leq b
+$$
+
+
+首先基于道路宽度和周围的障碍物找到点 $(s_j, l_j)$的下边界$l_{lb,j}$，且$j\in[0, m]$。计算约束的不等式为：
+
+
+$$
+\begin{vmatrix} 
+ 1 & t_0 & t_0^2 & t_0^3 & t_0^4&t_0^5 \\
+  1 & t_1 & t_1^2 & t_1^3 & t_1^4&t_1^5 \\
+ ...&...&...&...&...&... \\
+ 1 & t_m & t_m^2 & t_m^3 & t_m^4&t_m^5 \\
+ \end{vmatrix} \cdot \begin{vmatrix} a_i \\ b_i \\ c_i \\ d_i \\ e_i \\ f_i \end{vmatrix} 
+ \leq 
+ \begin{vmatrix}
+ l_{lb,0}\\
+ l_{lb,1}\\
+ ...\\
+ l_{lb,m}\\
+ \end{vmatrix}
+$$
+
+
+同样地，对上边界$l_{ub,j}$，计算约束的不等式为：
+
+
+$$
+\begin{vmatrix} 
+ 1 & t_0 & t_0^2 & t_0^3 & t_0^4&t_0^5 \\
+  1 & t_1 & t_1^2 & t_1^3 & t_1^4&t_1^5 \\
+ ...&...&...&...&...&... \\
+ 1 & t_m & t_m^2 & t_m^3 & t_m^4&t_m^5 \\
+ \end{vmatrix} \cdot \begin{vmatrix} a_i \\ b_i \\ c_i \\ d_i \\ e_i \\ f_i \end{vmatrix} 
+ \leq
+ -1 \cdot
+ \begin{vmatrix}
+ l_{ub,0}\\
+ l_{ub,1}\\
+ ...\\
+ l_{ub,m}\\
+ \end{vmatrix}
+$$
+
+
+#### 3.5  速度边界优化
+
+Apollo同样需要建立速度限制边界。
+
+在st曲线上取样 **m** 个点，为每个点$j$获取速度限制的上边界和下边界，例如$v{ub,j}$ 和 $v{lb,j}$，约束定义为：
+
+
+$$
+f'(t_j) \geq v_{lb,j}
+$$
+
+即：
+
+$$
+\begin{vmatrix}  
+0& 1 & t_0 & t_0^2 & t_0^3 & t_0^4 \\  
+0 & 1 & t_1 & t_1^2 & t_1^3 & t_1^4 \\ 
+...&...&...&...&...&... \\ 
+0& 1 & t_m & t_m^2 & t_m^3 & t_m^4 \\ 
+\end{vmatrix} 
+\cdot 
+\begin{vmatrix} 
+a_i \\ b_i \\ c_i \\ d_i \\ e_i \\ f_i 
+\end{vmatrix}  
+\geq  
+\begin{vmatrix} v_{lb,0}\\ v_{lb,1}\\ ...\\ v_{lb,m}\\ \end{vmatrix}
+$$
+
+且，
+
+$$
+f'(t_j) \leq v_{ub,j}
+$$
+
+即：
+
+$$
+\begin{vmatrix} 
+ 0& 1 & t_0 & t_0^2 & t_0^3 & t_0^4 \\
+ 0 & 1 & t_1 & t_1^2 & t_1^3 & t_1^4 \\
+ ...&...&...&...&...&... \\
+ 0 &1 & t_m & t_m^2 & t_m^3 & t_m^4 \\
+ \end{vmatrix} \cdot \begin{vmatrix} a_i \\ b_i \\ c_i \\ d_i \\ e_i \\ f_i \end{vmatrix} 
+ \leq
+ \begin{vmatrix}
+ v_{ub,0}\\
+ v_{ub,1}\\
+ ...\\
+ v_{ub,m}\\
+ \end{vmatrix}
+$$
 
 
 
+## 参考线平滑
 
+参考：https://github.com/ApolloAuto/apollo/blob/master/docs/specs/reference_line_smoother_cn.md
+
+_**Tip**: 为了更好的展示本文档中的等式，我们建议使用者使用带有[插件](https://chrome.google.com/webstore/detail/tex-all-the-things/cbimabofgmfdkicghcadidpemeenbffn)的Chrome浏览器，或者将Latex等式拷贝到[在线编辑公式网站](http://www.hostmath.com/)进行浏览。_
+
+二次规划（QP）+样条插值
+
+### 1. 目标函数
+
+#### 1.1 分段寻路路径
+
+将寻路路径划分为 **n** 段，每段用2个多项式表示：
+
+
+$$
+x = f_i(t)
+  = a_{i0} + a_{i1} * t + a_{i2} * t^2 + a_{i3} * t^3 + a_{i4} * t^4 + a_{i5} * t^5
+$$
+
+$$
+y = g_i(t) = b_{i0} + b_{i1} * t + b_{i2} * t^2 + b_{i3} * t^3 + b_{i4} * t^4 + b_{i5} * t^5
+$$
+
+
+#### 1.2 定义样条段优化目标函数
+
+
+$$
+cost = 
+\sum_{i=1}^{n} 
+\Big(
+\int\limits_{0}^{t_i} (f_i''')^2(t) dt 
++ \int\limits_{0}^{t_i} (g_i''')^2(t) dt 
+\Big)
+$$
+
+
+#### 1.3 将开销（cost）函数转换为QP公式
+
+QP公式：
+
+
+$$
+\frac{1}{2} \cdot x^T \cdot H \cdot x + f^T \cdot x 
+\\
+s.t. LB \leq x \leq UB
+\\
+A_{eq}x = b_{eq}
+\\
+Ax \leq b
+$$
+
+
+### 2 约束条件  
+
+#### 2.1 平滑节点约束
+
+该约束的目的是使样条的节点更加平滑。假设两个段$seg_k$ 和$seg_{k+1}$互相连接，且$seg_k$的累计值 **s** 为$s_k$。计算约束的等式为：
+
+
+$$
+f_k(s_k) = f_{k+1} (s_0)
+$$
+
+
+同样地，该公式也适用于下述等式：
+
+
+$$
+f'_k(s_k) = f'_{k+1} (s_0)
+\\
+f''_k(s_k) = f''_{k+1} (s_0)
+\\
+f'''_k(s_k) = f'''_{k+1} (s_0)
+\\
+g_k(s_k) = g_{k+1} (s_0)
+\\
+g'_k(s_k) = g'_{k+1} (s_0)
+\\
+g''_k(s_k) = g''_{k+1} (s_0)
+\\
+g'''_k(s_k) = g'''_{k+1} (s_0)
+$$
+
+
+#### 2.2 点采样边界约束
+
+在路径上均匀的取样 **m** 个点并检查这些点的预定义边界。
+
+
+$$
+f_i(t_l) - x_l< boundary
+\\
+g_i(t_l) - y_l< boundary
+$$
 
 
 
