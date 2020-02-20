@@ -73,7 +73,7 @@ https://github.com/werner-duvaud/muzero-general/wiki/How-MuZero-works
 
 #### 2 The I2A architecture
 
-![image-20200208111215557](/home/lichunhong/.config/Typora/typora-user-images/image-20200208111215557.png)
+![image-20200208111215557](./imags/image-20200208111215557.png)
 
 
 
@@ -96,7 +96,7 @@ https://github.com/werner-duvaud/muzero-general/wiki/How-MuZero-works
 
 提出了一种概率规划方法，能够在预期的规划过程中安全地处理上述情况。我们使用部分可观察马尔可夫决策过程（POMDP）来解决潜在道路使用者的挑战。在规划过程中，自主车辆能够根据当前和预测的环境考虑未来的观测。为了确定车辆将看到什么，我们使用车辆传感器设置的通用表示来计算其视野。总的来说，视野和对隐藏车辆的假设的结合导致了一个更具前瞻性和前瞻性的规划过程。
 
-![image-20200207154739565](/home/lichunhong/.config/Typora/typora-user-images/image-20200207154739565.png)
+![image-20200207154739565](./imags/image-20200207154739565.png)
 
 
 
@@ -128,7 +128,7 @@ https://github.com/werner-duvaud/muzero-general/wiki/How-MuZero-works
 
 
 
-![image-20200204121050465](/home/lichunhong/.config/Typora/typora-user-images/image-20200204121050465.png)
+![image-20200204121050465](./imags/image-20200204121050465.png)
 
 视频参考：https://www.youtube.com/watch?v=uLOsCZ4s03U
 
@@ -260,7 +260,7 @@ TODO：
 
 ## 2014-A Behavioral Planning Framework for Autonomous Driving.pdf
 
-![image-20200205155523496](/home/lichunhong/.config/Typora/typora-user-images/image-20200205155523496.png)
+![image-20200205155523496](./imags/image-20200205155523496.png)
 
 
 
@@ -302,7 +302,7 @@ TODO：
 
 自动驾驶车辆运动规划的层次结构：路线规划、行为规划、运动规划、反馈控制
 
-![image-20200207130739007](/home/lichunhong/.config/Typora/typora-user-images/image-20200207130739007.png)
+![image-20200207130739007](./imags/image-20200207130739007.png)
 
 **B. Reinforcement Learning**
 
@@ -383,7 +383,7 @@ LazyTheta*:
 
 - 在[25]中提出了一种变种的lattice planner，它通过较少密集地采样，但后优化得到的轨迹来实现降低计算复杂度。
 
-  ![image-20200210145001763](/home/lichunhong/.config/Typora/typora-user-images/image-20200210145001763.png)
+  ![image-20200210145001763](./imags/image-20200210145001763.png)
 
 
 
@@ -399,7 +399,7 @@ LazyTheta*:
 
   终端流形可以看作是由通过[24]的采样方法得到的采样顶点组成的。它被称为终端流形，因为所有的轨迹从ego车辆开始，并在采样顶点结束。由于没有构造图，因此不需要昂贵的基于图的搜索，因此避免了昂贵的计算麻烦的问题[24]。在轨迹表示方面，高速驾驶采用文献[24]中提出的方法，而低速驾驶的横向运动则取决于纵向运动。这种待遇被认为是合理的。一方面，由于引入潜在侧滑，车辆相对于道路中心线的纵向和横向运动在高速时高度解耦，这有利于轨道纵向和横向方面的解耦设计。另一方面，在低速时无侧滑是一个有效的假设，因此非完整约束起着关键作用，如果采用解耦设计，由于无效的曲率，将使大多数轨迹失效。仿真结果表明，合成的运动规划器能够很好地处理城市交通和公路交通中的几种具有挑战性的交通场景。
 
-<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200210105736372.png" alt="image-20200210105736372" style="zoom:80%;" />
+<img src="./imags/image-20200210105736372.png" alt="image-20200210105736372" style="zoom:80%;" />
 
 
 
@@ -454,7 +454,7 @@ LazyTheta*:
 
 代价函数组成：
 
-<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200117194211159.png" alt="image-20200117194211159" style="zoom:80%;" />
+<img src="./imags/image-20200117194211159.png" alt="image-20200117194211159" style="zoom:80%;" />
 
 
 
@@ -466,7 +466,7 @@ LazyTheta*:
 
 外部约束：物体碰撞
 
-![image-20200117194511139](/home/lichunhong/.config/Typora/typora-user-images/image-20200117194511139.png)
+![image-20200117194511139](./imags/image-20200117194511139.png)
 
 进行物体碰撞检测，自车用多个圆表示，障碍物用多边形表示。
 
@@ -480,7 +480,7 @@ LazyTheta*:
 
 静态障碍物：left-right decision 根据简单的几何结构，将障碍物分配到左右两边
 
-![image-20200117202900285](/home/lichunhong/.config/Typora/typora-user-images/image-20200117202900285.png)
+![image-20200117202900285](./imags/image-20200117202900285.png)
 
 
 
@@ -496,11 +496,11 @@ LazyTheta*:
 
 基于优化的路径选择
 
-![image-20200117205411907](/home/lichunhong/.config/Typora/typora-user-images/image-20200117205411907.png)
+![image-20200117205411907](./imags/image-20200117205411907.png)
 
 **F. Re-planning scheme**
 
-![image-20200117204615577](/home/lichunhong/.config/Typora/typora-user-images/image-20200117204615577.png)
+![image-20200117204615577](./imags/image-20200117204615577.png)
 
 **G. Constrained optimization**
 
@@ -526,17 +526,17 @@ LazyTheta*:
 
 本方法的结构是这样的：
 
-![image-20200210172728273](/home/lichunhong/.config/Typora/typora-user-images/image-20200210172728273.png)
+![image-20200210172728273](./imags/image-20200210172728273.png)
 
 核心结构上由两个planner组成，第一个是为了减少计算量所设计的‘’粗糙‘’planner, 计算出一点直线段构成的0阶连续曲线，然后拟合成三阶多项式（曲率连续）。第二个planner 再上一个planner的基础上对曲线进行进一步优化，使曲率更加平滑，同时保证横向偏差尽量小。
 
 第一个planner:
 
-![image-20200210172702258](/home/lichunhong/.config/Typora/typora-user-images/image-20200210172702258.png)
+![image-20200210172702258](./imags/image-20200210172702258.png)
 
 接下来就是进行第二次优化，下图表示了第二次优化和第一次的粗糙曲线的关系：
 
-![image-20200210175010090](/home/lichunhong/.config/Typora/typora-user-images/image-20200210175010090.png)
+![image-20200210175010090](./imags/image-20200210175010090.png)
 
 具体解析参考：https://blog.csdn.net/gophae/article/details/104069222
 
@@ -558,7 +558,7 @@ LazyTheta*:
 
 研究了移动交通中自主车辆所面临的轨迹生成问题。在给定交通流的预测运动的情况下，提出的半反应式规划策略实现了所有需要的长期机动任务（换道、合并、保持距离、保持速度、精确停车等），同时提供了短期的避碰。在街道相对坐标系中，采用精心选择的成本函数和终端状态集（流形）对横向和纵向运动进行组合优化，是获得舒适、人性化和物理上可行的轨迹的关键。仿真交通场景验证了该方法的性能。
 
-<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200210155133289.png" alt="image-20200210155133289" style="zoom:80%;" />
+<img src="./imags/image-20200210155133289.png" alt="image-20200210155133289" style="zoom:80%;" />
 
 
 
@@ -566,11 +566,11 @@ LazyTheta*:
 
 
 
-![image-20200212130235441](/home/lichunhong/.config/Typora/typora-user-images/image-20200212130235441.png)
+![image-20200212130235441](./imags/image-20200212130235441.png)
 
 上述方法如果进行长久的重新规划，那么如果我们引入启发式或次优性，就会产生关键的影响。连续规划之间的差异很容易导致车辆运动的超调，振荡甚至不稳定，这在高速行驶时尤为重要。 此外，如图2所示，计划周期显着影响紧急轨迹。
 
-![image-20200212125552587](/home/lichunhong/.config/Typora/typora-user-images/image-20200212125552587.png)
+![image-20200212125552587](./imags/image-20200212125552587.png)
 
 
 
@@ -602,11 +602,11 @@ LazyTheta*:
 
 
 
-![image-20200210154914498](/home/lichunhong/.config/Typora/typora-user-images/image-20200210154914498.png)
+![image-20200210154914498](./imags/image-20200210154914498.png)
 
 
 
-![image-20200210154932245](/home/lichunhong/.config/Typora/typora-user-images/image-20200210154932245.png)
+![image-20200210154932245](./imags/image-20200210154932245.png)
 
 
 
@@ -649,7 +649,7 @@ LazyTheta*:
 
 搜索算法：
 
-![image-20200206110050966](/home/lichunhong/.config/Typora/typora-user-images/image-20200206110050966.png)
+![image-20200206110050966](./imags/image-20200206110050966.png)
 
 
 
@@ -657,7 +657,7 @@ LazyTheta*:
 
 **C. Why include acceleration in the state space?**
 
-![image-20200205105802799](/home/lichunhong/.config/Typora/typora-user-images/image-20200205105802799.png)
+![image-20200205105802799](./imags/image-20200205105802799.png)
 
 从相同顶点出发的轨迹末端状态可能落在相同的时间速度晶格上，使用加速度维度区分轨迹。最终的轨迹拥有更一致的加速度剖面。
 
@@ -673,7 +673,7 @@ LazyTheta*:
 
 代价函数：最小化轨迹成本的加权总和上+进一步行驶的奖励+花费额外时间的惩罚。
 
-![image-20200206103655760](/home/lichunhong/.config/Typora/typora-user-images/image-20200206103655760.png)
+![image-20200206103655760](./imags/image-20200206103655760.png)
 
 然后，从$n_f$到起始状态反向追溯，重构最优轨迹。
 
@@ -701,19 +701,19 @@ GPU可以用来加速算法。当最坏的搜索情况发生时，不可避免�
 
 分别在CPU和GPU上测试了完整的规划所需时间，如下表所示。
 
-![image-20200205114538777](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114538777.png)
+![image-20200205114538777](./imags/image-20200205114538777.png)
 
 该planner展示了良好的轨迹规划特性，例如过弯道时，能够规划出合理的速度和加速度。在换道、超车、并线等一系列决策中也表现良好。
 
 
 
-![image-20200205113946025](/home/lichunhong/.config/Typora/typora-user-images/image-20200205113946025.png)
+![image-20200205113946025](./imags/image-20200205113946025.png)
 
 
 
-![image-20200205114009520](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114009520.png)
+![image-20200205114009520](./imags/image-20200205114009520.png)
 
-![image-20200205114054116](/home/lichunhong/.config/Typora/typora-user-images/image-20200205114054116.png)
+![image-20200205114054116](./imags/image-20200205114054116.png)
 
 
 
@@ -763,19 +763,19 @@ lattice起源文章？
 
 在$s-\rho $坐标系中采样。
 
-![image-20200219192744042](/home/lichunhong/.config/Typora/typora-user-images/image-20200219192744042.png)
+![image-20200219192744042](./imags/image-20200219192744042.png)
 
 Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰撞风险
 
-![image-20200219193006277](/home/lichunhong/.config/Typora/typora-user-images/image-20200219193006277.png)
+![image-20200219193006277](./imags/image-20200219193006277.png)
 
 传统的碰撞检测方法是计算所有路径与每个障碍物的距离，计算量复杂度是$O(NM)$。这里碰撞风险的计算使用了一种高斯卷积方法，显著降低了计算量[26]。
 
-![image-20200219193241859](/home/lichunhong/.config/Typora/typora-user-images/image-20200219193241859.png)
+![image-20200219193241859](./imags/image-20200219193241859.png)
 
 想法：碰撞检测的实现可以在$s-l$坐标系下，使用查表方式实现。假设所有的障碍物均表示在$s-\rho$坐标系下，根据障碍物的s范围，查询每条轨迹对应的s段轨迹点集wps，并计算每个wp是否在障碍物内。碰撞风险可以用上述的卷积代替距离计算。
 
-<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200220132213195.png" alt="image-20200220132213195" style="zoom: 80%;" />
+<img src="./imags/image-20200220132213195.png" alt="image-20200220132213195" style="zoom: 80%;" />
 
 每段轨迹的cost计算完之后，接下来是采用一种遍历手段，找出cost最小的路径。本文采用Dijkstra方法进行遍历。与Dijkstra算法不同的是，没有事先指定目标点，而是设计了目标点队列，存放多个目标点。当列表中的端点全部展开时，选择代价最小的作为我们的短期目标位置。**目标点队列？**
 
@@ -785,14 +785,14 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 优化代价函数：
 
-![image-20200220143450694](/home/lichunhong/.config/Typora/typora-user-images/image-20200220143450694.png)
+![image-20200220143450694](./imags/image-20200220143450694.png)
 
 约束：
 
 - 内在约束：最大曲率
 - 外在约束：不超过道路边界、无碰撞、道路速度限制
 
-![image-20200220144118144](/home/lichunhong/.config/Typora/typora-user-images/image-20200220144118144.png)
+![image-20200220144118144](./imags/image-20200220144118144.png)
 
 注意：所有的计算均是在$s-\rho$坐标系中进行，包括碰撞检测，这需要将障碍物表示在$s-\rho$坐标系中。轨迹优化时碰撞检测包含了所有障碍物（动静障碍），计算每个轨迹点的时刻与障碍物对应时刻在位置上是否相交。
 
@@ -804,21 +804,21 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 
 
-<img src="/home/lichunhong/.config/Typora/typora-user-images/image-20200220144926164.png" alt="image-20200220144926164" style="zoom:80%;" />
+<img src="./imags/image-20200220144926164.png" alt="image-20200220144926164" style="zoom:80%;" />
 
 
 
 代价函数：包含与参考速度的差异、加速度大小、加加速度大小、与障碍物碰撞风险
 
-![image-20200220145104759](/home/lichunhong/.config/Typora/typora-user-images/image-20200220145104759.png)
+![image-20200220145104759](./imags/image-20200220145104759.png)
 
 碰撞风险可以使用TTC（Time-To-Collision）、DTC（Distance-To-Collision ）、TTR（Time-ToReact）等表示。本文选择了DTC方案。这里的碰撞检测只根据ST图计算了纵向？
 
-![image-20200220145902566](/home/lichunhong/.config/Typora/typora-user-images/image-20200220145902566.png)
+![image-20200220145902566](./imags/image-20200220145902566.png)
 
 同路径的遍历基本一致，也使用了Dijkstra算法进行速度曲线寻优。
 
-![image-20200220150032959](/home/lichunhong/.config/Typora/typora-user-images/image-20200220150032959.png)
+![image-20200220150032959](./imags/image-20200220150032959.png)
 
 注意：速度轨迹搜索仅考虑动态障碍物（在S-T图中的障碍物均为动态障碍物），因为在上一步路径的选择、优化过程中，已经规避了动静态障碍物，但是动态障碍物的碰撞时间会随着车辆速度的变化产生变化，而静态障碍物不会。所以仅需考虑动态障碍物即可。
 
@@ -828,13 +828,13 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 优化：
 
-![image-20200220152006294](/home/lichunhong/.config/Typora/typora-user-images/image-20200220152006294.png)
+![image-20200220152006294](./imags/image-20200220152006294.png)
 
 
 
 碰撞约束：只考虑纵向s方向的碰撞？
 
-![image-20200220154447846](/home/lichunhong/.config/Typora/typora-user-images/image-20200220154447846.png)
+![image-20200220154447846](./imags/image-20200220154447846.png)
 
 
 
@@ -885,13 +885,13 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 
 
-![image-20200207185419069](/home/lichunhong/.config/Typora/typora-user-images/image-20200207185419069.png)
+![image-20200207185419069](./imags/image-20200207185419069.png)
 
 
 
 ### III. EM PLANNER AT LANE LEVEL
 
-![image-20200207185638460](/home/lichunhong/.config/Typora/typora-user-images/image-20200207185638460.png)
+![image-20200207185638460](./imags/image-20200207185638460.png)
 
 在第一个E-step，会将动静态障碍物投影到Frenet坐标系下，并且只考虑低速车辆和到来的障碍物，对于高速物体，EM Planner基于安全原因更倾向于变道。在第二个E-step，会考虑高速、低速车辆以及到来的障碍物。
 
@@ -905,21 +905,21 @@ Cost分为三部分：平滑、距离参考线距离、动静态障碍物的碰�
 
 SL映射
 
-![image-20200207190809039](/home/lichunhong/.config/Typora/typora-user-images/image-20200207190809039.png)
+![image-20200207190809039](./imags/image-20200207190809039.png)
 
 
 
 ST映射
 
-![image-20200207190834522](/home/lichunhong/.config/Typora/typora-user-images/image-20200207190834522.png)
+![image-20200207190834522](./imags/image-20200207190834522.png)
 
 
 
 **B. M-Step DP Path**
 
-![image-20200207191432352](/home/lichunhong/.config/Typora/typora-user-images/image-20200207191432352.png)
+![image-20200207191432352](./imags/image-20200207191432352.png)
 
-![image-20200207191515221](/home/lichunhong/.config/Typora/typora-user-images/image-20200207191515221.png)
+![image-20200207191515221](./imags/image-20200207191515221.png)
 
 
 
@@ -929,15 +929,15 @@ ST映射
 
 这里Cost有三个组成部分：平滑Cost、离障碍物距离Cost、离偏导线偏差Cost
 
-![image-20200207193047535](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193047535.png)
+![image-20200207193047535](./imags/image-20200207193047535.png)
 
 其中，
 
-![image-20200207193109627](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193109627.png)
+![image-20200207193109627](./imags/image-20200207193109627.png)
 
-![image-20200207193202141](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193202141.png)
+![image-20200207193202141](./imags/image-20200207193202141.png)
 
-![image-20200207193221870](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193221870.png)
+![image-20200207193221870](./imags/image-20200207193221870.png)
 
 
 
@@ -951,27 +951,27 @@ Nudge Decision包括nudge，yield和overtake，用来生成convex hull来进行Q
 
 
 
-![image-20200207193710133](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193710133.png)
+![image-20200207193710133](./imags/image-20200207193710133.png)
 
 
 
 
 
-![image-20200207193818227](/home/lichunhong/.config/Typora/typora-user-images/image-20200207193818227.png)
+![image-20200207193818227](./imags/image-20200207193818227.png)
 
 QP的Cost相对简单些，就是负责平滑的路径一阶二阶三阶倒数还有DP结果与引导线的偏差。
 
 **D. M-Step DP Speed Optimizer**
 
-![image-20200207194405850](/home/lichunhong/.config/Typora/typora-user-images/image-20200207194405850.png)
+![image-20200207194405850](./imags/image-20200207194405850.png)
 
-![image-20200207194859303](/home/lichunhong/.config/Typora/typora-user-images/image-20200207194859303.png)
+![image-20200207194859303](./imags/image-20200207194859303.png)
 
 **E. M-Step QP Speed Optimizer**
 
-![image-20200207195049570](/home/lichunhong/.config/Typora/typora-user-images/image-20200207195049570.png)
+![image-20200207195049570](./imags/image-20200207195049570.png)
 
-![image-20200207195107274](/home/lichunhong/.config/Typora/typora-user-images/image-20200207195107274.png)
+![image-20200207195107274](./imags/image-20200207195107274.png)
 
 **G. Notes on Non-convex Optimization With DP and QP**
 
@@ -1333,7 +1333,7 @@ Lattice Planner主要基于采样+选择，而EM Planner的思路是逐层优化
 - 选择代价最小轨迹进行碰撞检测，如果无法通过碰撞检测，则选择剩余轨迹中代价最小的，进行约束和碰撞检测，直到通过检测。
 - 输出运动轨迹
 
-![image-20200212223008953](/home/lichunhong/.config/Typora/typora-user-images/image-20200212223008953.png)
+![image-20200212223008953](./imags/image-20200212223008953.png)
 
 ### 采样
 
@@ -1359,7 +1359,7 @@ void Trajectory1dGenerator::GenerateTrajectoryBundles(
 
 下图不是Apollo原图，只是方便理解。 横向采样点固定，但纵向采样点不固定。
 
-![image-20200212121013125](/home/lichunhong/.config/Typora/typora-user-images/image-20200212121013125.png)
+![image-20200212121013125](./imags/image-20200212121013125.png)
 
 - 如果开启了横向轨迹优化，则进行LateralOSQPOptimizer进行轨迹优化，仅采样出一条横向轨迹。//TODO:LateralOSQPOptimizer
 - 否则的话，计算末状态，进行横向采样。现在Apollo的代码中设计了三个末状态横向偏移量d，-0.5，0.0和0.5，以及四个到达这些横向偏移量的纵向位移s，分别为10，20，40，80，其中d是关于s的函数。
@@ -1565,13 +1565,13 @@ EndConditionSampler::SampleLonEndConditionsForPathTimePoints() const {
 1. **Objective achievement cost**
    首先是到达目的的 cost。这里分成两种情况，一个是存在停车指令（比如红灯）的情况，另一个是没有停车指令的。如果存在停车指令，相对大的车速，其对应的轨迹 cost 就越大；如果没有停车指令，那么低速轨迹的 cost 就会越大。
 
-![image-20200212225333753](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225333753.png)
+![image-20200212225333753](./imags/image-20200212225333753.png)
 
 
 
 2. **Lateral offset cost**
 
-![image-20200212225518532](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225518532.png)
+![image-20200212225518532](./imags/image-20200212225518532.png)
 
 第二个 cost 是横向偏移 cost。设计这个 cost 是为了让自动驾驶汽车能尽量沿着道路中心行驶。那么像左图汽车靠道路一边行驶，和中图画龙的行驶轨迹，他们的 cost 都相对较高。
 
@@ -1579,7 +1579,7 @@ EndConditionSampler::SampleLonEndConditionsForPathTimePoints() const {
 
 3. **Collision cost**
 
-![image-20200212225555183](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225555183.png)
+![image-20200212225555183](./imags/image-20200212225555183.png)
 
 
 
@@ -1599,7 +1599,7 @@ EndConditionSampler::SampleLonEndConditionsForPathTimePoints() const {
 
 最后一个 cost 是向心加速度 cost。设计这个 cost 是为了在转弯或调头的时候能够减速慢行。在弯道处，车速慢的轨迹，其向心加速度 cost 就会相对较低，就会更容易被率先挑选出来。
 
-![image-20200212225837173](/home/lichunhong/.config/Typora/typora-user-images/image-20200212225837173.png)
+![image-20200212225837173](./imags/image-20200212225837173.png)
 
 
 
@@ -1634,7 +1634,7 @@ Apollo认为一个车道仅能够容纳一辆车，当有障碍物进入该车�
 
 对于换道场景，Lattice算法仅仅需要对目标车道对应的参考线做一次采样+选择的流程。本车道和目标车道均能产生一条最优轨迹。给换道轨迹的cost上增加额外的车道优先级的cost，再将两条轨迹比较，选择cost较小的那条即可。
 
-![image-20200213112219653](/home/lichunhong/.config/Typora/typora-user-images/image-20200213112219653.png)
+![image-20200213112219653](./imags/image-20200213112219653.png)
 
 
 
@@ -1665,7 +1665,46 @@ lattice planner ST图只考虑了当前车道障碍物。并且选择超车时�
 
 
 
+## NLP solvers
+
+非线性优化问题：https://en.wikipedia.org/wiki/Nonlinear_programming
+
+Let *n*, *m*, and *p* be positive integers. Let *X* be a subset of *Rn*, let *f*, *gi*, and *hj* be [real-valued functions](https://en.wikipedia.org/wiki/Real-valued_function) on *X* for each *i* in {*1*, …, *m*} and each *j* in {*1*, …, *p*}, with at least one of *f*, *gi*, and *hj* being nonlinear.
+
+![image-20200220202627000](./imags/image-20200220202627000.png)
+
+ 如果目标函数是二次的并且约束是线性的，就可用QP(quadratic programming)方法解决。
+
+
+
+方法：一阶梯度法和二阶梯度法 、高斯牛顿法、LM算法
+
+开源的解算器：
+
+
+
+
+
+Apollo用到NLP
+
+
+
 ## QP solvers
+
+二次优化问题：https://en.wikipedia.org/wiki/Quadratic_programming
+
+![image-20200220201646286](./imags/image-20200220201646286.png)
+
+方法：
+
+- [interior point](https://en.wikipedia.org/wiki/Interior_point_method),
+- [active set](https://en.wikipedia.org/wiki/Active_set),[[2\]](https://en.wikipedia.org/wiki/Quadratic_programming#cite_note-ioe.engin.umich-2)
+- [augmented Lagrangian](https://en.wikipedia.org/wiki/Augmented_Lagrangian_method),[[3\]](https://en.wikipedia.org/wiki/Quadratic_programming#cite_note-3)
+- [conjugate gradient](https://en.wikipedia.org/wiki/Conjugate_gradient_method),
+- [gradient projection](https://en.wikipedia.org/w/index.php?title=Gradient_projection_method&action=edit&redlink=1),
+- extensions of the [simplex algorithm](https://en.wikipedia.org/wiki/Simplex_algorithm).[[2\]](https://en.wikipedia.org/wiki/Quadratic_programming#cite_note-ioe.engin.umich-2)
+
+开源的解算器：
 
 - Dense solvers:
   - [CVXOPT](http://cvxopt.org/)
