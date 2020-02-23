@@ -1204,7 +1204,7 @@ $$\delta(t)=tan^{-1}(\frac{Lsin(\eta(t))}{L_{fw}})$$
 
 
 
-# Autoware实现
+# Autoware
 
 ## Open Source Integrated Planner for Autonomous Navigation in Highly Dynamic Environments
 
