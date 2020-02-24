@@ -1294,6 +1294,65 @@ Behavior states transition conditions.
 
 
 
+## Apollo高精地图表示
+
+
+
+### 高精地图 pnc_map
+
+
+
+
+
+
+
+### 高精地图中路径的表示 path
+
+
+
+
+
+
+
+
+
+## Apollo参考线表示
+
+### 参考线 reference_line
+
+参考道路线是自动驾驶车辆的参考运行路线。在道路参考线头文件中，包含了获取车道宽度和路径宽度的方法。还有其他很多方法：拼接、SLToXY、XYToSL、道路类型、获取限速、增加限速、获取优先级、设置优先级、获取高精地图路径等等。Apollo从高精地图获取到的参考线，表示在$s-l$坐标系中。
+
+```c++
+//file in planning/reference_line/reference_line.h
+bool GetLaneWidth(const double s, double* const lane_left_width,
+                    double* const lane_right_width) const;
+bool GetOffsetToMap(const double s, double* l_offset) const;
+bool GetRoadWidth(const double s, double* const road_left_width,
+                    double* const road_right_width) const;
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Apollo 5.0中lattice_planner流程
 
 **动机：**
