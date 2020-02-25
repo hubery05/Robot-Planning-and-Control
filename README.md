@@ -745,6 +745,22 @@ lattice起源文章？
 
 
 
+## 2019-ITSC-Optimal Trajectory Generation for Autonomous Vehicles Under Centripetal Acceleration Constraints for In-lane Driving Scenarios
+
+文章解析：https://www.cnblogs.com/liuzubing/p/11051390.html
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## 2019-A Decoupled Trajectory Planning Framework Based on the Integration of Lattice Searching and Convex Optimization
 
 这篇文章总结和对比了前人在轨迹规划（维度包含$x,y,theta,v$）所采用的方法，作者采取了一种解耦方法，进行了上述维度的规划。本文思路与EM_planner DP/QP优化过程基本一致，并在曲率的连续性上做出了一些改进。文章细节交代比较清楚，方便工程实现。
@@ -1304,6 +1320,24 @@ Behavior states transition conditions.
 
 
 
+RouteSegments是多个LaneSegment的集合
+
+```c++
+class RouteSegments : public std::vector<LaneSegment>
+```
+
+PncMap综合了所有道路结构
+
+```c++
+class PncMap
+```
+
+
+
+
+
+
+
 
 
 ### 高精地图中路径的表示 path
@@ -1775,7 +1809,7 @@ Apollo用到NLP
   - [MOSEK](https://mosek.com/)
   - [OSQP](https://github.com/oxfordcontrol/osqp)
 
-Apollo在MPC控制以及Lattice横向轨迹优化上使用了OSQP解算器。在EM_Planner中路径和速度的二次优化均使用了OSQP和IPOPT解算器。一些优化任务中，也有用到qpOASES。
+Apollo在MPC控制以及Lattice横向轨迹优化上使用了OSQP解算器。在EM_Planner中路径和速度的二次优化均使用了OSQP和IPOPT解算器。一些优化任务中，也有用到qpOASES。另外，需要注意的是，Apollo经过不断的优化，目前EM_Planner已经被更优秀的方法取代，例如之前路径的选择使用的DpPolyPathOptimizer、QpSplinePathOptimizer、QpPiecewiseJerkPathOptimizer均已被弃用，PiecewiseJerkPathOptimizer能够覆盖覆盖前面的优化器。
 
 
 
@@ -1852,7 +1886,7 @@ $$
 f_i'(s) =
 \begin{vmatrix} 0 & 1 & 2s & 3s^2 & 4s^3 & 5s^4 \end{vmatrix}
 \cdot
-\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}   
+\begin{vmatrix} a_{i0} \\ a_{i1} \\ a_{i2} \\ a_{i3} \\ a_{i4} \\ a_{i5} \end{vmatrix}
 $$
 
 
